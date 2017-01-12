@@ -1,6 +1,5 @@
 ﻿namespace Open311.GeoReportApi.InputModels
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
@@ -13,8 +12,8 @@
         /// The unique identifier for the service request type.
         /// </summary>
         [Required]
-        [DataMember(Name = "service_code")]
-        [Display(Name = "service_code")]
+        [DataMember(Name = Open311Constants.ModelProperties.ServiceCode)]
+        [Display(Name = Open311Constants.ModelProperties.ServiceCode)]
         public string ServiceCode { get; set; }
 
         // TODO: Attribute: An array of key/value responses based on Service Definitions.
@@ -26,7 +25,7 @@
         /// <see cref="Lat"/> and <see cref="Long"/> both need to be sent even though they are sent as two separate parameters.
         /// <see cref="Lat"/> and <see cref="Long"/> are required if no <see cref="AddressString"/> or <see cref="AddressId"/> is provided.
         /// </remarks>
-        [DataMember(Name = "lat")]
+        [DataMember(Name = Open311Constants.ModelProperties.Lat)]
         public double? Lat { get; set; }
 
         /// <summary>
@@ -36,7 +35,7 @@
         /// <see cref="Lat"/> and <see cref="Long"/> both need to be sent even though they are sent as two separate parameters.
         /// <see cref="Lat"/> and <see cref="Long"/> are required if no <see cref="AddressString"/> or <see cref="AddressId"/> is provided.
         /// </remarks>
-        [DataMember(Name = "long")]
+        [DataMember(Name = Open311Constants.ModelProperties.Long)]
         public double? Long { get; set; }
 
         /// <summary>
@@ -47,7 +46,7 @@
         /// This should be written from most specific to most general geographic unit,
         /// eg: address number or cross streets, street name, neighborhood/district, city/town/village, county, postal code.
         /// </remarks>
-        [DataMember(Name = "address_string")]
+        [DataMember(Name = Open311Constants.ModelProperties.AddressString)]
         public string AddressString { get; set; }
 
         /// <summary>
@@ -56,15 +55,15 @@
         /// <remarks>
         /// This is required if no <see cref="Lat"/>/<see cref="Long"/> or <see cref="AddressString"/> are provided.
         /// </remarks>
-        [DataMember(Name = "address_id")]
+        [DataMember(Name = Open311Constants.ModelProperties.AddressId)]
         public string AddressId { get; set; }
 
         /// <summary>
         /// The email address of the person submitting the request.
         /// </summary>
         [EmailAddress]
-        [DataMember(Name = "email")]
-        [Display(Name = "email")]
+        [DataMember(Name = Open311Constants.ModelProperties.Email)]
+        [Display(Name = Open311Constants.ModelProperties.Email)]
         public string Email { get; set; }
 
         /// <summary>
@@ -74,31 +73,31 @@
         /// <remarks>
         /// Android devices can use TelephonyManager.getDeviceId() and iPhones can use [UIDevice currentDevice].uniqueIdentifier
         /// </remarks>
-        [DataMember(Name = "device_id")]
+        [DataMember(Name = Open311Constants.ModelProperties.DeviceId)]
         public string DeviceId { get; set; }
 
         /// <summary>
         /// The unique ID for the user account of the person submitting the request.
         /// </summary>
-        [DataMember(Name = "account_id")]
+        [DataMember(Name = Open311Constants.ModelProperties.AccountId)]
         public string AccountId { get; set; }
 
         /// <summary>
         /// The given name of the person submitting the request.
         /// </summary>
-        [DataMember(Name = "first_name")]
+        [DataMember(Name = Open311Constants.ModelProperties.FirstName)]
         public string FirstName { get; set; }
 
         /// <summary>
         /// The family name of the person submitting the request.
         /// </summary>
-        [DataMember(Name = "last_name")]
+        [DataMember(Name = Open311Constants.ModelProperties.LastName)]
         public string LastName { get; set; }
 
         /// <summary>
         /// The phone number of the person submitting the request.
         /// </summary>
-        [DataMember(Name = "phone")]
+        [DataMember(Name = Open311Constants.ModelProperties.Phone)]
         public string Phone { get; set; }
 
         /// <summary>
@@ -107,8 +106,8 @@
         /// this is free form text limited to 4,000 characters.
         /// </summary>
         [MaxLength(4000)]
-        [DataMember(Name = "description")]
-        [Display(Name = "description")]
+        [DataMember(Name = Open311Constants.ModelProperties.Description)]
+        [Display(Name = Open311Constants.ModelProperties.Description)]
         public string Description { get; set; }
 
         /// <summary>
@@ -123,8 +122,8 @@
         /// parse for media in a more structured way.
         /// </remarks>
         [Url]
-        [DataMember(Name = "media_url")]
-        [Display(Name = "media_url")]
+        [DataMember(Name = Open311Constants.ModelProperties.MediaUrl)]
+        [Display(Name = Open311Constants.ModelProperties.MediaUrl)]
         public string MediaUrl { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

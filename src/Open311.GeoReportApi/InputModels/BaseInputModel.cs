@@ -19,8 +19,8 @@
         /// if the implementation only serves one jurisdiction.
         /// </summary>
         [Required]
-        [DataMember(Name = "jurisdiction_id")]
-        [Display(Name = "jurisdiction_id")]
+        [DataMember(Name = Open311Constants.ModelProperties.JurisdictionId)]
+        [Display(Name = Open311Constants.ModelProperties.JurisdictionId)]
         public string JurisdictionId { get; set; }
     }
 }

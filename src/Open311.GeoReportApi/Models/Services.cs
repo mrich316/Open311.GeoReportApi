@@ -3,7 +3,8 @@
     using System.Collections.Generic;
     using System.Runtime.Serialization;
 
-    [CollectionDataContract(Name = "services", ItemName = "service")]
+    [DataContract]
+    [CollectionDataContract(Name = Open311Constants.ModelProperties.Services, ItemName = Open311Constants.ModelProperties.Service)]
     public class Services<T> : List<T>
     {
         public Services()

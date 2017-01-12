@@ -4,8 +4,10 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
+    using System.Runtime.Serialization;
     using Models;
 
+    [DataContract]
     public class GetServiceRequestsInputModel : BaseInputModel, IValidatableObject
     {
         public GetServiceRequestsInputModel()

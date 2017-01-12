@@ -2,7 +2,9 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.Runtime.Serialization;
 
+    [DataContract]
     public class ServiceRequest
     {
         /// <summary>
@@ -37,6 +39,7 @@
         /// Otherwise, this is free form text limited to 4,000 characters.
         /// </summary>
         [MaxLength(4000)]
+        [Display(Name = Open311Constants.ModelProperties.Description)]
         public string Description { get; set; }
 
         /// <summary>

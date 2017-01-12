@@ -8,19 +8,19 @@
         /// <summary>
         /// The unique identifier for the service request type.
         /// </summary>
-        [DataMember(Name = "service_code")]
+        [DataMember(Name = Open311Constants.ModelProperties.ServiceCode)]
         public string ServiceCode { get; set; }
 
         /// <summary>
         /// The human readable name of the service request type.
         /// </summary>
-        [DataMember(Name = "service_name")]
+        [DataMember(Name = Open311Constants.ModelProperties.ServiceName)]
         public string ServiceName { get; set; }
 
         /// <summary>
         /// A brief description of the service request type.
         /// </summary>
-        [DataMember(Name = "description")]
+        [DataMember(Name = Open311Constants.ModelProperties.Description)]
         public string Description { get; set; }
 
         /// <summary>
@@ -30,27 +30,27 @@
         /// <c>false</c>: No additional information is required and a call to the Service
         /// Definition method is not needed.
         /// </summary>
-        [DataMember(Name = "metadata")]
+        [DataMember(Name = Open311Constants.ModelProperties.Metadata)]
         public bool Metadata { get; set; }
 
         /// <summary>
         /// Service type.
         /// </summary>
-        [DataMember(Name = "type")]
+        [DataMember(Name = Open311Constants.ModelProperties.Type)]
         public ServiceType Type { get; set; }
 
         /// <summary>
         /// A comma separated list of tags or keywords to help users identify the request type.
         /// This can provide synonyms of the service_name and group.
         /// </summary>
-        [DataMember(Name = "keywords")]
+        [DataMember(Name = Open311Constants.ModelProperties.Keywords)]
         public string Keywords { get; set; }
 
         /// <summary>
         /// A category to group this service type within. This provides a way to group
         /// several service request types under one category such as "sanitation".
         /// </summary>
-        [DataMember(Name = "group")]
+        [DataMember(Name = Open311Constants.ModelProperties.Group)]
         public string Group { get; set; }
     }
 }

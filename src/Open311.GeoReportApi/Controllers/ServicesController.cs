@@ -33,7 +33,7 @@
                 return NotFound(new Error
                 {
                     Code = 404,
-                    Description = "jurisdiction_id provided was not found"
+                    Description = $"{Open311Constants.ModelProperties.JurisdictionId} provided was not found"
                 });
             }
 

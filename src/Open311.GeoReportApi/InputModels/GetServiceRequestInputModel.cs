@@ -10,8 +10,8 @@
         /// The unique ID of the service request.
         /// </summary>
         [Required]
-        [DataMember(Name = "service_request_id")]
-        [Display(Name = "service_request_id")]
+        [DataMember(Name = Open311Constants.ModelProperties.ServiceRequestId)]
+        [Display(Name = Open311Constants.ModelProperties.ServiceRequestId)]
         public string ServiceRequestId { get; set; }
     }
 }

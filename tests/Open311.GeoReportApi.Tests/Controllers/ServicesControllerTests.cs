@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using GeoReportApi.Controllers;
-    using InputModels;
+    using GeoReportApi.InputModels;
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using Moq;
@@ -24,7 +24,7 @@
         public class GetServiceList
         {
             [Theory, TestConventions]
-            public async Task JurisdictionId_WithoutServicesReturnsNotFound([Frozen] IServiceStore serviceStore, ServicesController sut, GetServiceListInputModel model)
+            public async Task JurisdictionIdWithoutServicesReturnsNotFound([Frozen] IServiceStore serviceStore, ServicesController sut, GetServiceListInputModel model)
             {
                 var mockStore = Mock.Get(serviceStore);
                 mockStore
@@ -41,18 +41,20 @@
             }
 
             [Theory, TestConventions]
-            public async Task JurisdictionId_WithServicesReturnsOk([Frozen] IServiceStore serviceStore, ServicesController sut, GetServiceListInputModel model, Service service)
+            public async Task JurisdictionIdWithServicesReturnsOk([Frozen] IServiceStore serviceStore, ServicesController sut, GetServiceListInputModel model, Service expected)
             {
                 var mockStore = Mock.Get(serviceStore);
                 mockStore
                     .Setup(s => s.GetServices(It.IsAny<string>()))
-                    .Returns(Task.FromResult<IEnumerable<Service>>(new[] {service}));
+                    .Returns(Task.FromResult<IEnumerable<Service>>(new[] {expected}));
 
                 var result = await sut.GetServiceList(model);
 
                 Assert.IsType<OkObjectResult>(result);
 
                 var actual = ((OkObjectResult)result).Value;
+                Assert.IsType<Services<Service>>(actual);
+                Assert.Equal(expected, ((Services<Service>)actual).FirstOrDefault());
             }
         }
     }

@@ -10,8 +10,8 @@
         /// The unique identifier for the service request type.
         /// </summary>
         [Required]
-        [DataMember(Name = "service_code")]
-        [Display(Name = "service_code")]
+        [DataMember(Name = Open311Constants.ModelProperties.ServiceCode)]
+        [Display(Name = Open311Constants.ModelProperties.ServiceCode)]
         public string ServiceCode { get; set; }
     }
 }

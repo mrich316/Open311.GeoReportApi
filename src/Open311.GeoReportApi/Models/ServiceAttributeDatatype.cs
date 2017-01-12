@@ -1,8 +1,11 @@
 ﻿namespace Open311.GeoReportApi.Models
 {
+    using System.Runtime.Serialization;
+
     /// <summary>
     /// Denotes the type of field used for user input.
     /// </summary>
+    [DataContract]
     public enum ServiceAttributeDatatype
     {
         /// <summary>
