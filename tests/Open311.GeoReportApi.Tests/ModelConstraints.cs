@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
+    using System.Reflection;
     using System.Runtime.Serialization;
     using System.Text;
     using Newtonsoft.Json.Serialization;
@@ -42,7 +43,7 @@
                     if (expected != actual)
                     {
                         errorMessage.AppendLine(
-                            $"{type.Name}.{prop.Name} must be decorated with a [Display(Name = \"{expected}\").");
+                            $"{type.Name}.{prop.Name} must be decorated with a [Display(Name = \"{expected}\")].");
                     }
                 }
             }
@@ -58,7 +59,8 @@
         {
             var modelTypes = typeof(Open311Constants).Assembly.GetTypes()
                 .Where(t => t.Namespace.EndsWith("Models"))
-                .Where(t => !t.GetCustomAttributes(typeof(DataContractAttribute), true).Any());
+                .Where(t => !t.GetCustomAttributes(typeof(DataContractAttribute), true).Any()
+                            && !t.GetCustomAttributes(typeof(CollectionDataContractAttribute), true).Any());
 
             var errorMessage = new StringBuilder();
 
@@ -78,7 +80,8 @@
         {
             var modelTypes = typeof(Open311Constants).Assembly.GetTypes()
                 .Where(t => t.Namespace.EndsWith("Models"))
-                .Where(t => t.GetCustomAttributes(typeof(DataContractAttribute), true).Any());
+                .Where(t => t.GetCustomAttributes(typeof(DataContractAttribute), true).Any()
+                            || t.GetCustomAttributes(typeof(CollectionDataContractAttribute), true).Any());
 
             var typesWithValidationAttributes = modelTypes.Select(t => new
             {
@@ -103,7 +106,47 @@
                     if (expected != actual)
                     {
                         errorMessage.AppendLine(
-                            $"{type.Name}.{prop.Name} must be decorated with a [DataMember(Name = \"{expected}\").");
+                            $"{type.Name}.{prop.Name} must be decorated with a [DataMember(Name = \"{expected}\")].");
+                    }
+                }
+            }
+
+            if (errorMessage.Length > 0)
+            {
+                throw new Exception(errorMessage.ToString());
+            }
+        }
+
+        [Fact]
+        public void AllModelsWithDataContractAttributesMustDefineEnumValuesAsSnakeCase()
+        {
+            var modelTypes = typeof(Open311Constants).Assembly.GetTypes()
+                .Where(t => t.Namespace.EndsWith("Models") && t.IsEnum)
+                .Where(t => t.GetCustomAttributes(typeof(DataContractAttribute), true).Any());
+
+            var enumTypes = modelTypes.Select(t => new
+            {
+                t.Name,
+                EnumValues = t.GetMembers(BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Public)
+            });
+
+            var snakeCase = new SnakeCaseNamingStrategy(true, false);
+            var errorMessage = new StringBuilder();
+
+            foreach (var type in enumTypes)
+            {
+                foreach (var prop in type.EnumValues)
+                {
+                    var member =
+                        prop.GetCustomAttributes(typeof(EnumMemberAttribute), true).FirstOrDefault() as EnumMemberAttribute;
+
+                    var expected = snakeCase.GetPropertyName(prop.Name, false);
+                    var actual = member?.Value;
+
+                    if (expected != actual)
+                    {
+                        errorMessage.AppendLine(
+                            $"{type.Name}.{prop.Name} must be decorated with a [EnumMember(Value = \"{expected}\")].");
                     }
                 }
             }

@@ -5,7 +5,10 @@
     [DataContract]
     public enum ServiceRequestStatus
     {
+        [EnumMember(Value = "closed")]
         Closed,
+
+        [EnumMember(Value = "open")]
         Open
     }
 }
