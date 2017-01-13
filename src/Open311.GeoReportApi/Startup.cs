@@ -52,7 +52,8 @@
                     }
 
                     // Add action validators
-                    options.Filters.Add(typeof(ValidateAttribute));
+                    options.Filters.Add(typeof(ValidateModelStateAttribute));
+                    options.Filters.Add(typeof(ValidateJurisdictionAttribute));
                 })
                 .AddJsonOptions(options =>
                 {
@@ -66,6 +67,7 @@
                     options.SerializerSettings.Converters.Add(new StringEnumConverter(true));
                 });
 
+            services.AddScoped<IServiceStoreFactory, InMemoryServiceStoreFactory>();
             services.AddScoped<IServiceStore>(provider => new InMemoryServiceStore(
                 new Service
                 {

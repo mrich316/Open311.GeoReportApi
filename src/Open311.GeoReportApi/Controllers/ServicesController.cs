@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using InputModels;
     using Microsoft.AspNetCore.Mvc;
@@ -9,35 +10,67 @@
     using Services;
 
     [FormatFilter]
-    [Route("")]
+    [Route(Open311Constants.Routes.GeoReportV2)]
     public class ServicesController : Controller
     {
-        private readonly IServiceStore _serviceStore;
+        private readonly IServiceStoreFactory _storeFactory;
 
-        public ServicesController(IServiceStore serviceStore)
+        public ServicesController(IServiceStoreFactory storeFactory)
         {
-            if (serviceStore == null) throw new ArgumentNullException(nameof(serviceStore));
-            _serviceStore = serviceStore;
+            if (storeFactory == null) throw new ArgumentNullException(nameof(storeFactory));
+            _storeFactory = storeFactory;
         }
 
         [HttpGet("services.{format}")]
-        public async Task<IActionResult> GetServiceList(GetServiceListInputModel model)
+        public async Task<IActionResult> GetServiceList(GetServiceListInputModel model, CancellationToken cancellationToken)
         {
-            var services = await _serviceStore
-                .GetServices(model.JurisdictionId);
+            var store = await GetServiceStore(model);
+            var services = await store
+                .GetServices(cancellationToken);
 
             var serviceList = new Services<Service>(services);
 
-            if (!serviceList.Any())
-            {
-                return NotFound(new Error
-                {
-                    Code = 404,
-                    Description = $"{Open311Constants.ModelProperties.JurisdictionId} provided was not found"
-                });
-            }
+            var result = serviceList.Any()
+                ? Ok(serviceList)
+                : NotFound(404, $"{Open311Constants.ModelProperties.JurisdictionId} provided was not found");
 
-            return Ok(serviceList);
+            return result;
+        }
+
+        [HttpGet("services/{service_code}.{format}")]
+        public async Task<IActionResult> GetServiceDefinition(GetServiceDefinitionInputModel model, CancellationToken cancellationToken)
+        {
+            var store = await GetServiceStore(model);
+            var definition = await store
+                .GetServiceDefinition(model.ServiceCode, cancellationToken);
+
+            var result = definition != null
+                ? Ok(definition)
+                : NotFound(404,
+                    $"{Open311Constants.ModelProperties.ServiceCode} or {Open311Constants.ModelProperties.JurisdictionId} provided was not found.");
+
+            return result;
+        }
+
+        [HttpGet("services/requests.{format}")]
+        public IActionResult PostServiceRequest(PostServiceRequestInputModel model)
+        {
+            // TODO: Requires API key.
+            throw new NotImplementedException();
+        }
+
+        protected virtual Task<IServiceStore> GetServiceStore<TModel>(TModel model) where TModel : BaseInputModel
+        {
+            return _storeFactory.GetServiceStore(model.JurisdictionId);
+        }
+
+        protected virtual IActionResult NotFound(int code, string description)
+        {
+            return NotFound(new Error
+            {
+                Code = code,
+                Description = description
+            });
         }
     }
 }

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using GeoReportApi.Controllers;
     using GeoReportApi.InputModels;
@@ -18,7 +19,7 @@
         [Fact]
         public void Ctor_ThrowsOnArgumentNull()
         {
-            Assert.Throws<ArgumentNullException>("serviceStore", () => new ServicesController(null));
+            Assert.Throws<ArgumentNullException>("storeFactory", () => new ServicesController(null));
         }
 
         public class GetServiceList
@@ -28,10 +29,10 @@
             {
                 var mockStore = Mock.Get(serviceStore);
                 mockStore
-                    .Setup(s => s.GetServices(It.IsAny<string>()))
+                    .Setup(s => s.GetServices(CancellationToken.None))
                     .Returns(Task.FromResult(Enumerable.Empty<Service>()));
 
-                var result = await sut.GetServiceList(model);
+                var result = await sut.GetServiceList(model, CancellationToken.None);
 
                 Assert.IsType<NotFoundObjectResult>(result);
 
@@ -45,10 +46,10 @@
             {
                 var mockStore = Mock.Get(serviceStore);
                 mockStore
-                    .Setup(s => s.GetServices(It.IsAny<string>()))
+                    .Setup(s => s.GetServices(CancellationToken.None))
                     .Returns(Task.FromResult<IEnumerable<Service>>(new[] {expected}));
 
-                var result = await sut.GetServiceList(model);
+                var result = await sut.GetServiceList(model, CancellationToken.None);
 
                 Assert.IsType<OkObjectResult>(result);
 

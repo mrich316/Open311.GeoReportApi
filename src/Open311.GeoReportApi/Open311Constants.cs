@@ -2,6 +2,13 @@
 {
     public static class Open311Constants
     {
+        public const string DefaultNamespace = "";
+
+        public static class Routes
+        {
+            public const string GeoReportV2 = "v2";
+        }
+
         public static class ModelProperties
         {
             public const string AccountId = "account_id";

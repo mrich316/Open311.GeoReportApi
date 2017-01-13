@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Models;
 
-    public class ValidateAttribute : ActionFilterAttribute
+    public class ValidateModelStateAttribute : ActionFilterAttribute
     {
         /// <summary>
         /// Transform model state errors to a 400-BadRequest using GeoReports errors. 

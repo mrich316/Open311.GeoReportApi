@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Models;
-    using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
 
     public class InMemoryServiceStore : IServiceStore
@@ -22,13 +22,14 @@
             _services = new List<Service>(services);
         }
 
-        public Task<IEnumerable<Service>> GetServices(string jurisdictionId)
+        public Task<IEnumerable<Service>> GetServices(CancellationToken cancellationToken)
         {
-            var result = jurisdictionId == Open311Options.DefaultJurisdictionId
-                ? _services
-                : Enumerable.Empty<Service>();
+            return Task.FromResult<IEnumerable<Service>>(_services);
+        }
 
-            return Task.FromResult(result);
+        public Task<object> GetServiceDefinition(string modelServiceCode, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }
