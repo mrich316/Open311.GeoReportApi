@@ -2,7 +2,7 @@
 {
     using System.Runtime.Serialization;
 
-    [DataContract]
+    [DataContract(Namespace = Open311Constants.DefaultNamespace)]
     public class ServiceAttributeValue
     {
         public string Key { get; set; }

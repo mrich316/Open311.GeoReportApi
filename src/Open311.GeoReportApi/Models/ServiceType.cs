@@ -8,7 +8,7 @@
     /// This token can then be later used to return the service request ID.
     /// <c>blackbox</c>: No service request ID will be returned after the service request is submitted
     /// </summary>
-    [DataContract]
+    [DataContract(Namespace = Open311Constants.DefaultNamespace)]
     public enum ServiceType
     {
         /// <summary>

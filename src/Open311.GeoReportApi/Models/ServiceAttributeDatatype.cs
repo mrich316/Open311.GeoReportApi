@@ -5,7 +5,7 @@
     /// <summary>
     /// Denotes the type of field used for user input.
     /// </summary>
-    [DataContract]
+    [DataContract(Namespace = Open311Constants.DefaultNamespace)]
     public enum ServiceAttributeDatatype
     {
         /// <summary>

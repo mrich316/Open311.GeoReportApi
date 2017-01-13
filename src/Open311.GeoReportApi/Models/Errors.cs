@@ -3,7 +3,10 @@
     using System.Collections.Generic;
     using System.Runtime.Serialization;
 
-    [CollectionDataContract(Name = Open311Constants.ModelProperties.Errors, ItemName = Open311Constants.ModelProperties.Error)]
+    [CollectionDataContract(
+        Name = Open311Constants.ModelProperties.Errors,
+        ItemName = Open311Constants.ModelProperties.Error, 
+        Namespace = Open311Constants.DefaultNamespace)]
     public class Errors : List<Error>
     {
         public Errors()
