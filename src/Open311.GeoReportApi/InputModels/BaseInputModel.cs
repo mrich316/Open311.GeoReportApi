@@ -1,9 +1,7 @@
 ﻿namespace Open311.GeoReportApi.InputModels
 {
     using System.ComponentModel.DataAnnotations;
-    using System.Runtime.Serialization;
 
-    [DataContract]
     public class BaseInputModel
     {
         public BaseInputModel()
@@ -19,7 +17,6 @@
         /// if the implementation only serves one jurisdiction.
         /// </summary>
         [Required]
-        [DataMember(Name = Open311Constants.ModelProperties.JurisdictionId)]
         [Display(Name = Open311Constants.ModelProperties.JurisdictionId)]
         public string JurisdictionId { get; set; }
     }
