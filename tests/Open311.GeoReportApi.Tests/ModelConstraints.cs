@@ -58,7 +58,7 @@
         public void AllModelsMustBeSerializableByDataContractSerializer()
         {
             var modelTypes = typeof(Open311Constants).Assembly.GetTypes()
-                .Where(t => t.Namespace.EndsWith("Models"))
+                .Where(t => t.Namespace.EndsWith(".Models")) // Skip InputModels.
                 .Where(t => !t.GetCustomAttributes(typeof(DataContractAttribute), true).Any()
                             && !t.GetCustomAttributes(typeof(CollectionDataContractAttribute), true).Any());
 
@@ -148,6 +148,64 @@
                         errorMessage.AppendLine(
                             $"{type.Name}.{prop.Name} must be decorated with a [EnumMember(Value = \"{expected}\")].");
                     }
+                }
+            }
+
+            if (errorMessage.Length > 0)
+            {
+                throw new Exception(errorMessage.ToString());
+            }
+        }
+
+        [Fact]
+        public void AllModelsWithCollectionDataContractAttributeAttributesMustDefineNamespace()
+        {
+            var modelTypes = typeof(Open311Constants).Assembly.GetTypes()
+                .Select(t => new
+                {
+                    t.Namespace,
+                    t.Name,
+                    DataContract = t.GetCustomAttributes(typeof(CollectionDataContractAttribute), true).FirstOrDefault() as CollectionDataContractAttribute
+                })
+                .Where(t => t.Namespace.EndsWith("Models") && t.DataContract != null);
+
+            var errorMessage = new StringBuilder();
+
+            foreach (var type in modelTypes)
+            {
+                if (type.DataContract.Namespace != Open311Constants.DefaultNamespace)
+                {
+                    errorMessage.AppendLine(
+                        $"{type.Name} must be decorated with a namespace, ex: [DataContract(Namespace = Open311Constants.DefaultNamespace)].");
+                }
+            }
+
+            if (errorMessage.Length > 0)
+            {
+                throw new Exception(errorMessage.ToString());
+            }
+        }
+
+        [Fact]
+        public void AllModelsWithDataContractAttributesMustDefineNamespace()
+        {
+            var modelTypes = typeof(Open311Constants).Assembly.GetTypes()
+                .Select(t => new
+                {
+                    t.Namespace,
+                    t.Name,
+                    DataContract = t.GetCustomAttributes(typeof(DataContractAttribute), true).FirstOrDefault() as DataContractAttribute
+                })
+                .Where(t => t.Namespace.EndsWith("Models") && t.DataContract != null);
+
+            var errorMessage = new StringBuilder();
+
+            foreach (var type in modelTypes)
+            {
+                if (type.DataContract.Namespace != Open311Constants.DefaultNamespace)
+                {
+                    errorMessage.AppendLine(
+                        $"{type.Name} must be decorated with a namespace, ex: [DataContract(Namespace = Open311Constants.DefaultNamespace)].");
                 }
             }
 
