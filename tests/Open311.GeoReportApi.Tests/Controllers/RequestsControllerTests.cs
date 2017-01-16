@@ -66,5 +66,76 @@
                 Assert.Equal(expected, (ServiceRequest) actual);
             }
         }
+
+        public class GetServiceRequests
+        {
+            [Theory, TestConventions]
+            public async Task UsingNonExistentServiceRequestIdsReturnsOk(
+                [Frozen] IServiceRequestSearchService searchService,
+                RequestsController sut,
+                GetServiceRequestsInputModel model)
+            {
+                var mockService = Mock.Get(searchService);
+                mockService
+                    .Setup(s => s.Get(It.IsAny<IEnumerable<string>>(), CancellationToken.None))
+                    .Returns(Task.FromResult(Enumerable.Empty<ServiceRequest>()));
+
+                var result = await sut.GetServiceRequests(model, CancellationToken.None);
+                mockService.Verify();
+                mockService.Verify(s => s.Search(It.IsAny<ServiceRequestQuery>(), CancellationToken.None), Times.Never());
+
+                Assert.IsType<OkObjectResult>(result);
+
+                var actual = ((OkObjectResult)result).Value;
+                Assert.IsType<ServiceRequests<ServiceRequest>>(actual);
+                Assert.Equal(0, ((ServiceRequests<ServiceRequest>)actual).Count);
+            }
+
+            [Theory, TestConventions]
+            public async Task UsingExistingServiceRequestIdsReturnsOk(
+                [Frozen] IServiceRequestSearchService searchService,
+                RequestsController sut,
+                GetServiceRequestsInputModel model, List<ServiceRequest> expected)
+            {
+                var mockService = Mock.Get(searchService);
+                mockService
+                    .Setup(s => s.Get(It.IsAny<IEnumerable<string>>(), CancellationToken.None))
+                    .Returns(Task.FromResult<IEnumerable<ServiceRequest>>(expected));
+
+                var result = await sut.GetServiceRequests(model, CancellationToken.None);
+                mockService.Verify();
+                mockService.Verify(s => s.Search(It.IsAny<ServiceRequestQuery>(), CancellationToken.None), Times.Never());
+
+                Assert.IsType<OkObjectResult>(result);
+
+                var actual = ((OkObjectResult)result).Value;
+                Assert.IsType<ServiceRequests<ServiceRequest>>(actual);
+                Assert.Equal(expected, (ServiceRequests<ServiceRequest>)actual);
+            }
+
+            [Theory, TestConventions]
+            public async Task UsingOtherPropertiesReturnsOk(
+                [Frozen] IServiceRequestSearchService searchService,
+                RequestsController sut,
+                GetServiceRequestsInputModel model, List<ServiceRequest> expected)
+            {
+                model.ServiceRequestId.Clear();
+
+                var mockService = Mock.Get(searchService);
+                mockService
+                    .Setup(s => s.Search(It.IsAny<ServiceRequestQuery>(), CancellationToken.None))
+                    .Returns(Task.FromResult<IEnumerable<ServiceRequest>>(expected));
+
+                var result = await sut.GetServiceRequests(model, CancellationToken.None);
+                mockService.Verify();
+                mockService.Verify(s => s.Get(It.IsAny<IEnumerable<string>>(), CancellationToken.None), Times.Never());
+
+                Assert.IsType<OkObjectResult>(result);
+
+                var actual = ((OkObjectResult)result).Value;
+                Assert.IsType<ServiceRequests<ServiceRequest>>(actual);
+                Assert.Equal(expected, (ServiceRequests<ServiceRequest>)actual);
+            }
+        }
     }
 }
