@@ -11,24 +11,23 @@
 
     [FormatFilter]
     [Route(Open311Constants.Routes.GeoReportV2)]
-    public class ServicesController : Controller
+    public class ServicesController : GeoReportController
     {
-        private readonly IServiceStoreFactory _storeFactory;
+        private readonly IJurisdictionService _jurisdiction;
 
-        public ServicesController(IServiceStoreFactory storeFactory)
+        public ServicesController(IJurisdictionService jurisdiction)
         {
-            if (storeFactory == null) throw new ArgumentNullException(nameof(storeFactory));
-            _storeFactory = storeFactory;
+            if (jurisdiction == null) throw new ArgumentNullException(nameof(jurisdiction));
+            _jurisdiction = jurisdiction;
         }
 
         [HttpGet("services.{format}")]
         public async Task<IActionResult> GetServiceList(GetServiceListInputModel model, CancellationToken cancellationToken)
         {
-            var store = await GetServiceStore(model);
-            var services = await store
-                .GetServices(cancellationToken);
+            var store = await _jurisdiction.GetServiceStore(model);
+            var services = await store.GetServices(cancellationToken);
 
-            var serviceList = new Services<Service>(services);
+            var serviceList = new Services(services);
 
             var result = serviceList.Any()
                 ? Ok(serviceList)
@@ -40,37 +39,14 @@
         [HttpGet("services/{service_code}.{format}")]
         public async Task<IActionResult> GetServiceDefinition(GetServiceDefinitionInputModel model, CancellationToken cancellationToken)
         {
-            var store = await GetServiceStore(model);
-            var definition = await store
-                .GetServiceDefinition(model.ServiceCode, cancellationToken);
+            var store = await _jurisdiction.GetServiceStore(model);
+            var definition = await store.GetServiceDefinition(model.ServiceCode, cancellationToken);
 
             var result = definition != null
                 ? Ok(definition)
-                : NotFound(404,
-                    $"{Open311Constants.ModelProperties.ServiceCode} or {Open311Constants.ModelProperties.JurisdictionId} provided was not found.");
+                : NotFound(404, $"{Open311Constants.ModelProperties.ServiceCode} provided was not found.");
 
             return result;
-        }
-
-        [HttpGet("services/requests.{format}")]
-        public IActionResult PostServiceRequest(PostServiceRequestInputModel model)
-        {
-            // TODO: Requires API key.
-            throw new NotImplementedException();
-        }
-
-        protected virtual Task<IServiceStore> GetServiceStore<TModel>(TModel model) where TModel : BaseInputModel
-        {
-            return _storeFactory.GetServiceStore(model.JurisdictionId);
-        }
-
-        protected virtual IActionResult NotFound(int code, string description)
-        {
-            return NotFound(new Error
-            {
-                Code = code,
-                Description = description
-            });
         }
     }
 }

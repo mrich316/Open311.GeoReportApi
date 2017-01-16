@@ -1,6 +1,8 @@
 ﻿namespace Open311.GeoReportApi.Models
 {
+    using System.Collections.Generic;
     using System.Runtime.Serialization;
+    using Newtonsoft.Json;
 
     [DataContract(Namespace = Open311Constants.DefaultNamespace)]
     public class Service
@@ -52,5 +54,9 @@
         /// </summary>
         [DataMember(Name = Open311Constants.ModelProperties.Group)]
         public string Group { get; set; }
+
+        [IgnoreDataMember]
+        [JsonIgnore]
+        public Dictionary<string, ServiceAttribute> ServiceAttributes { get; set; }
     }
 }

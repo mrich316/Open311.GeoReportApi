@@ -11,12 +11,12 @@
 
     public class ValidateJurisdictionAttribute : ActionFilterAttribute
     {
-        private readonly IServiceStoreFactory _serviceStoreFactory;
+        private readonly IJurisdictionService _serviceStoreFactory;
 
-        public ValidateJurisdictionAttribute(IServiceStoreFactory serviceStoreFactory)
+        public ValidateJurisdictionAttribute(IJurisdictionService jurisdiction)
         {
-            if (serviceStoreFactory == null) throw new ArgumentNullException(nameof(serviceStoreFactory));
-            _serviceStoreFactory = serviceStoreFactory;
+            if (jurisdiction == null) throw new ArgumentNullException(nameof(jurisdiction));
+            _serviceStoreFactory = jurisdiction;
         }
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
@@ -25,7 +25,7 @@
 
             foreach (var model in context.ActionArguments.Values.OfType<BaseInputModel>())
             {
-                if (!await _serviceStoreFactory.JurisdictionExists(model.JurisdictionId))
+                if (!await _serviceStoreFactory.Exists(model.JurisdictionId))
                 {
                     context.Result = new NotFoundObjectResult(new Errors(new Error
                     {
@@ -36,6 +36,8 @@
                     break;
                 }
             }
+
+            await base.OnActionExecutionAsync(context, next);
         }
     }
 }

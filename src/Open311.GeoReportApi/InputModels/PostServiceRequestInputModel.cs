@@ -13,7 +13,16 @@
         [Display(Name = Open311Constants.ModelProperties.ServiceCode)]
         public string ServiceCode { get; set; }
 
-        // TODO: Attribute: An array of key/value responses based on Service Definitions.
+        /// <summary>
+        /// An array of key/value responses based on Service Definitions.
+        /// </summary>
+        /// <remarks>
+        /// This takes the form of attribute[code]=value where multiple code/value pairs can be specified as well
+        /// as multiple values for the same code in the case of a multivaluelist datatype
+        /// (attribute[code1][]=value1&amp;attribute[code1][]=value2&amp;attribute[code1][]=value3).
+        /// This is only required if the service_code requires a service definition with required fields`.
+        /// </remarks>
+        public Dictionary<string, string> Attribute { get; set; }
 
         /// <summary>
         /// Latitude using the (WGS84) projection.

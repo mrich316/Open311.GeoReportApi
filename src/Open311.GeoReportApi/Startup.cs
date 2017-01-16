@@ -67,7 +67,8 @@
                     options.SerializerSettings.Converters.Add(new StringEnumConverter(true));
                 });
 
-            services.AddScoped<IServiceStoreFactory, InMemoryServiceStoreFactory>();
+            services.AddScoped<IJurisdictionService, InMemoryJurisdictionService>();
+            services.AddScoped<IServiceRequestStore, InMemoryServiceRequestStore>();
             services.AddScoped<IServiceStore>(provider => new InMemoryServiceStore(
                 new Service
                 {

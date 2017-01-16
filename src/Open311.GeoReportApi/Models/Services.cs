@@ -7,7 +7,7 @@
         Name = Open311Constants.ModelProperties.Services, 
         ItemName = Open311Constants.ModelProperties.Service,
         Namespace = Open311Constants.DefaultNamespace)]
-    public class Services<T> : List<T>
+    public class Services : List<Service>
     {
         public Services()
         {
@@ -18,7 +18,7 @@
         {
         }
 
-        public Services(IEnumerable<T> collection)
+        public Services(IEnumerable<Service> collection)
             : base(collection)
         {
         }

@@ -19,13 +19,16 @@
         [Fact]
         public void Ctor_ThrowsOnArgumentNull()
         {
-            Assert.Throws<ArgumentNullException>("storeFactory", () => new ServicesController(null));
+            Assert.Throws<ArgumentNullException>("jurisdiction", () => new ServicesController(null));
         }
 
         public class GetServiceList
         {
             [Theory, TestConventions]
-            public async Task JurisdictionIdWithoutServicesReturnsNotFound([Frozen] IServiceStore serviceStore, ServicesController sut, GetServiceListInputModel model)
+            public async Task WithoutServiceReturnsNotFound(
+                [Frozen] IServiceStore serviceStore,
+                ServicesController sut,
+                GetServiceListInputModel model)
             {
                 var mockStore = Mock.Get(serviceStore);
                 mockStore
@@ -42,7 +45,10 @@
             }
 
             [Theory, TestConventions]
-            public async Task JurisdictionIdWithServicesReturnsOk([Frozen] IServiceStore serviceStore, ServicesController sut, GetServiceListInputModel model, Service expected)
+            public async Task WithServicesReturnsOk(
+                [Frozen] IServiceStore serviceStore,
+                ServicesController sut,
+                GetServiceListInputModel model, Service expected)
             {
                 var mockStore = Mock.Get(serviceStore);
                 mockStore
@@ -53,9 +59,52 @@
 
                 Assert.IsType<OkObjectResult>(result);
 
+                var actual = ((OkObjectResult) result).Value;
+                Assert.IsType<Services>(actual);
+                Assert.Equal(expected, ((Services) actual).FirstOrDefault());
+            }
+        }
+
+        public class GetServiceDefinition
+        {
+            [Theory, TestConventions]
+            public async Task WithoutServiceDefinitionReturnsNotFound(
+                [Frozen] IServiceStore serviceStore,
+                ServicesController sut,
+                GetServiceDefinitionInputModel model)
+            {
+                var mockStore = Mock.Get(serviceStore);
+                mockStore
+                    .Setup(s => s.GetServiceDefinition(It.IsAny<string>(), CancellationToken.None))
+                    .Returns(Task.FromResult<ServiceDefinition>(null));
+
+                var result = await sut.GetServiceDefinition(model, CancellationToken.None);
+
+                Assert.IsType<NotFoundObjectResult>(result);
+
+                var actual = ((NotFoundObjectResult)result).Value;
+                Assert.IsType<Error>(actual);
+                Assert.Equal(404, ((Error)actual).Code);
+            }
+            
+            [Theory, TestConventions]
+            public async Task WithServiceDefinitionReturnsOk(
+                [Frozen] IServiceStore serviceStore,
+                ServicesController sut,
+                GetServiceDefinitionInputModel model, ServiceDefinition expected)
+            {
+                var mockStore = Mock.Get(serviceStore);
+                mockStore
+                    .Setup(s => s.GetServiceDefinition(It.IsAny<string>(), CancellationToken.None))
+                    .Returns(Task.FromResult(expected));
+
+                var result = await sut.GetServiceDefinition(model, CancellationToken.None);
+
+                Assert.IsType<OkObjectResult>(result);
+
                 var actual = ((OkObjectResult)result).Value;
-                Assert.IsType<Services<Service>>(actual);
-                Assert.Equal(expected, ((Services<Service>)actual).FirstOrDefault());
+                Assert.IsType<ServiceDefinition>(actual);
+                Assert.Equal(expected, actual);
             }
         }
     }

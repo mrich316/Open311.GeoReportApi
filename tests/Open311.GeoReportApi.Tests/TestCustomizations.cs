@@ -14,10 +14,10 @@
             fixture.Customize<ServicesController>(c => c
                 .OmitAutoProperties());
 
-            fixture.Customize<IServiceStoreFactory>(c => c
+            fixture.Customize<IJurisdictionService>(c => c
                 .FromFactory(() =>
                 {
-                    var storeFactory = new Mock<IServiceStoreFactory>();
+                    var storeFactory = new Mock<IJurisdictionService>();
                     storeFactory
                         .Setup(sf => sf.GetServiceStore(It.IsRegex(@"^(?!invalid)")))
                         .Returns(Task.FromResult(fixture.Create<IServiceStore>()));

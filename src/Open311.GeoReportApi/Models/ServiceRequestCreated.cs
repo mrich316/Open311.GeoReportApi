@@ -3,7 +3,7 @@
     using System.Runtime.Serialization;
 
     [DataContract(Namespace = Open311Constants.DefaultNamespace)]
-    public class PostServiceRequestResponse
+    public class ServiceRequestCreated
     {
         /// <summary>
         /// The unique ID of the service request created.
@@ -11,7 +11,7 @@
         /// <remarks>
         /// This should not be returned if <see cref="Token"/>  is returned
         /// </remarks>
-        [DataMember(Name = Open311Constants.ModelProperties.ServiceRequestId)]
+        [DataMember(Name = Open311Constants.ModelProperties.ServiceRequestId, EmitDefaultValue = false)]
         public string ServiceRequestId { get; set; }
 
         /// <summary>
@@ -20,21 +20,21 @@
         /// <remarks>
         /// This should not be returned if <see cref="ServiceRequestId"/> is returned
         /// </remarks>
-        [DataMember(Name = Open311Constants.ModelProperties.Token)]
+        [DataMember(Name = Open311Constants.ModelProperties.Token, EmitDefaultValue = false)]
         public string Token { get; set; }
 
         /// <summary>
         /// Information about the action expected to fulfill the request or otherwise address the information reported.
         /// May not be returned.
         /// </summary>
-        [DataMember(Name = Open311Constants.ModelProperties.ServiceNotice)]
+        [DataMember(Name = Open311Constants.ModelProperties.ServiceNotice, EmitDefaultValue = false)]
         public string ServiceNotice { get; set; }
 
         /// <summary>
         /// The unique ID for the user account of the person submitting the request.
         /// May not be returned.
         /// </summary>
-        [DataMember(Name = Open311Constants.ModelProperties.AccountId)]
+        [DataMember(Name = Open311Constants.ModelProperties.AccountId, EmitDefaultValue = false)]
         public string AccountId { get; set; }
     }
 }

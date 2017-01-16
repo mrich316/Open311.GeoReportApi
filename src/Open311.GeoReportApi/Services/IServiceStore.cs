@@ -9,6 +9,8 @@
     {
         Task<IEnumerable<Service>> GetServices(CancellationToken cancellationToken);
 
-        Task<object> GetServiceDefinition(string modelServiceCode, CancellationToken cancellationToken);
+        Task<Service> GetService(string serviceCode, CancellationToken cancellationToken);
+
+        Task<ServiceDefinition> GetServiceDefinition(string serviceCode, CancellationToken cancellationToken);
     }
 }

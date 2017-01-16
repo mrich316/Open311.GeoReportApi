@@ -31,10 +31,14 @@
             public const string Metadata = "metadata";
             public const string Phone = "phone";
             public const string Service = "service";
+            public const string ServiceAttribute = "attribute";
+            public const string ServiceAttributes = "attributes";
             public const string ServiceCode = "service_code";
             public const string ServiceName = "service_name";
             public const string ServiceNotice = "service_notice";
+            public const string ServiceRequest = "service_request";
             public const string ServiceRequestId = "service_request_id";
+            public const string ServiceRequests = "service_requests";
             public const string Services = "services";
             public const string Token = "token";
             public const string Type = "type";
