@@ -1,6 +1,8 @@
 ﻿namespace Open311.GeoReportApi.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using InputModels;
@@ -23,8 +25,8 @@
         [HttpGet("requests/{serviceRequestId}.{format}")]
         public async Task<IActionResult> GetServiceRequest(GetServiceRequestInputModel model)
         {
-            var requestStore = await _jurisdiction.GetServiceRequestStore(model);
-            var serviceRequest = await requestStore.Get(model.ServiceRequestId);
+            var searchService = await _jurisdiction.GetServiceRequestSearchService(model);
+            var serviceRequest = await searchService.Get(model.ServiceRequestId);
 
             return serviceRequest != null
                 ? Ok(serviceRequest)
@@ -34,11 +36,26 @@
         [HttpGet("requests.{format}")]
         public async Task<IActionResult> GetServiceRequests(GetServiceRequestsInputModel model)
         {
-            var requestStore = await _jurisdiction.GetServiceRequestStore(model);
+            IEnumerable<ServiceRequest> serviceRequests;
+            var searchService = await _jurisdiction.GetServiceRequestSearchService(model);
 
-            // TODO: Implement GetServiceRequests.
-            // TODO: Find a way to expose a clean search interface.
-            var serviceRequests = await requestStore.Search();
+            // If ServiceRequestId is defined, it overrides all other arguments.
+            if (model.ServiceRequestId.Any())
+            {
+                serviceRequests = await searchService.Get(model.ServiceRequestId);
+            }
+            else
+            {
+                var query = new ServiceRequestQuery
+                {
+                    EndDate = model.EndDate,
+                    ServiceCodes = model.ServiceCode,
+                    StartDate = model.StartDate,
+                    Statuses = model.Status
+                };
+
+                serviceRequests = await searchService.Search(query);
+            }
 
             return Ok(new ServiceRequests<ServiceRequest>(serviceRequests));
         }

@@ -3,7 +3,6 @@ namespace Open311.GeoReportApi.Services
 {
     using System.Threading.Tasks;
     using InputModels;
-    using Services;
 
     public static class JurisdictionServiceExtensions
     {
@@ -17,6 +16,12 @@ namespace Open311.GeoReportApi.Services
             where T : BaseInputModel
         {
             return jurisdiction.GetServiceRequestStore(model.JurisdictionId);
+        }
+
+        public static Task<IServiceRequestSearchService> GetServiceRequestSearchService<T>(this IJurisdictionService jurisdiction, T model)
+            where T : BaseInputModel
+        {
+            return jurisdiction.GetServiceRequestSearchService(model.JurisdictionId);
         }
     }
 }

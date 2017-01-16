@@ -9,5 +9,7 @@
         Task<IServiceStore> GetServiceStore(string jurisdictionId);
 
         Task<IServiceRequestStore> GetServiceRequestStore(string jurisdictionId);
+
+        Task<IServiceRequestSearchService> GetServiceRequestSearchService(string jurisdictionId);
     }
 }

@@ -30,7 +30,7 @@
                     context.Result = new NotFoundObjectResult(new Errors(new Error
                     {
                         Code = 404,
-                        Description = $"{Open311Constants.ModelProperties.JurisdictionId} was not found."
+                        Description = $"{Open311Constants.ModelProperties.JurisdictionId} provided was not found."
                     }));
 
                     break;

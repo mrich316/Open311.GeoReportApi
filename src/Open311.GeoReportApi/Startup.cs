@@ -68,8 +68,8 @@
                 });
 
             services.AddScoped<IJurisdictionService, InMemoryJurisdictionService>();
-            services.AddScoped<IServiceRequestStore, InMemoryServiceRequestStore>();
-            services.AddScoped<IServiceStore>(provider => new InMemoryServiceStore(
+            services.AddScoped<InMemoryServiceRequestStore>();
+            services.AddScoped(provider => new InMemoryServiceStore(
                 new Service
                 {
                     Description = "Test service",
