@@ -36,6 +36,7 @@
                     .Returns(Task.FromResult(Enumerable.Empty<Service>()));
 
                 var result = await sut.GetServiceList(model, CancellationToken.None);
+                mockStore.Verify();
 
                 Assert.IsType<NotFoundObjectResult>(result);
 
@@ -56,6 +57,7 @@
                     .Returns(Task.FromResult<IEnumerable<Service>>(new[] {expected}));
 
                 var result = await sut.GetServiceList(model, CancellationToken.None);
+                mockStore.Verify();
 
                 Assert.IsType<OkObjectResult>(result);
 
@@ -79,6 +81,7 @@
                     .Returns(Task.FromResult<ServiceDefinition>(null));
 
                 var result = await sut.GetServiceDefinition(model, CancellationToken.None);
+                mockStore.Verify();
 
                 Assert.IsType<NotFoundObjectResult>(result);
 
@@ -99,6 +102,7 @@
                     .Returns(Task.FromResult(expected));
 
                 var result = await sut.GetServiceDefinition(model, CancellationToken.None);
+                mockStore.Verify();
 
                 Assert.IsType<OkObjectResult>(result);
 

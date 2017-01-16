@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using Models;
     using System.Linq;
+    using System.Threading;
 
     public class InMemoryServiceRequestStore : IServiceRequestStore, IServiceRequestSearchService
     {
@@ -14,13 +15,7 @@
             throw new System.NotImplementedException();
         }
 
-        public Task<ServiceRequest> Get(string serviceRequestId)
-        {
-            return Task.FromResult(_serviceRequests
-                .FirstOrDefault(kvp => kvp.Key == serviceRequestId).Value);
-        }
-
-        public Task<IEnumerable<ServiceRequest>> Get(IEnumerable<string> serviceRequestId)
+        public Task<IEnumerable<ServiceRequest>> Get(IEnumerable<string> serviceRequestId, CancellationToken cancellationToken)
         {
             var hash = new HashSet<string>(serviceRequestId);
 
@@ -29,7 +24,7 @@
                 .Select(kvp => kvp.Value));
         }
 
-        public Task<IEnumerable<ServiceRequest>> Search(ServiceRequestQuery query)
+        public Task<IEnumerable<ServiceRequest>> Search(ServiceRequestQuery query, CancellationToken cancellationToken)
         {
             List<ServiceRequest> searchResults = null;
 

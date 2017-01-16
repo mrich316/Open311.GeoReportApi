@@ -23,10 +23,11 @@
         }
 
         [HttpGet("requests/{serviceRequestId}.{format}")]
-        public async Task<IActionResult> GetServiceRequest(GetServiceRequestInputModel model)
+        public async Task<IActionResult> GetServiceRequest(GetServiceRequestInputModel model, CancellationToken cancellationToken)
         {
             var searchService = await _jurisdiction.GetServiceRequestSearchService(model);
-            var serviceRequest = await searchService.Get(model.ServiceRequestId);
+            var serviceRequest = (await searchService.Get(new[] {model.ServiceRequestId}, cancellationToken))
+                .FirstOrDefault();
 
             return serviceRequest != null
                 ? Ok(serviceRequest)
@@ -34,15 +35,15 @@
         }
 
         [HttpGet("requests.{format}")]
-        public async Task<IActionResult> GetServiceRequests(GetServiceRequestsInputModel model)
+        public async Task<IActionResult> GetServiceRequests(GetServiceRequestsInputModel model, CancellationToken cancellationToken)
         {
             IEnumerable<ServiceRequest> serviceRequests;
             var searchService = await _jurisdiction.GetServiceRequestSearchService(model);
 
-            // If ServiceRequestId is defined, it overrides all other arguments.
+            // if a service request id is defined, it overrides all other arguments.
             if (model.ServiceRequestId.Any())
             {
-                serviceRequests = await searchService.Get(model.ServiceRequestId);
+                serviceRequests = await searchService.Get(model.ServiceRequestId, cancellationToken);
             }
             else
             {
@@ -54,7 +55,7 @@
                     Statuses = model.Status
                 };
 
-                serviceRequests = await searchService.Search(query);
+                serviceRequests = await searchService.Search(query, cancellationToken);
             }
 
             return Ok(new ServiceRequests<ServiceRequest>(serviceRequests));
