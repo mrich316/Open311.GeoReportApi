@@ -33,23 +33,12 @@
                     options.FormatterMappings.SetMediaTypeMappingForFormat("xml",
                         new MediaTypeHeaderValue("application/xml"));
 
-                    // Replace QueryStringValueProvider with a snake_case variant.
-                    var queryProvider =
-                        options.ValueProviderFactories.FirstOrDefault(
-                            f => f.GetType() == typeof(QueryStringValueProviderFactory));
+                    // Replace value providers with snake_case variants.
+                    options.ValueProviderFactories.AddOrReplace<IValueProviderFactory, QueryStringValueProviderFactory>(
+                        new NamingStrategyQueryStringValueProviderFactory(namingStrategy));
 
-                    if (queryProvider != null)
-                    {
-                        var index = options.ValueProviderFactories.IndexOf(queryProvider);
-                        options.ValueProviderFactories.Insert(index,
-                            new NamingStrategyQueryStringValueProviderFactory(namingStrategy));
-                        options.ValueProviderFactories.Remove(queryProvider);
-                    }
-                    else
-                    {
-                        options.ValueProviderFactories.Add(
-                            new NamingStrategyQueryStringValueProviderFactory(namingStrategy));
-                    }
+                    options.ValueProviderFactories.AddOrReplace<IValueProviderFactory, FormValueProviderFactory>(
+                        new NamingStrategyFormValueProviderFactory(namingStrategy));
 
                     // Add action validators
                     options.Filters.Add(typeof(ValidateModelStateAttribute));

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Globalization;
+    using System.Linq;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Newtonsoft.Json.Serialization;
@@ -20,7 +21,9 @@
 
         public override ValueProviderResult GetValue(string key)
         {
-            key = _namingStrategy.GetPropertyName(key, false);
+            key = string.Join(".", key.Split('.')
+                .Select(k => _namingStrategy.GetPropertyName(k, false)));
+
             return base.GetValue(key);
         }
     }
