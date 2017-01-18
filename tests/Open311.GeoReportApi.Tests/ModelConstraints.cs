@@ -6,6 +6,7 @@
     using System.Reflection;
     using System.Runtime.Serialization;
     using System.Text;
+    using Models;
     using Newtonsoft.Json.Serialization;
     using Xunit;
 
@@ -206,6 +207,85 @@
                 {
                     errorMessage.AppendLine(
                         $"{type.Name} must be decorated with a namespace, ex: [DataContract(Namespace = Open311Constants.DefaultNamespace)].");
+                }
+            }
+
+            if (errorMessage.Length > 0)
+            {
+                throw new Exception(errorMessage.ToString());
+            }
+        }
+
+        [Fact]
+        public void AllModelsWithDataContractAttributesMustDefineSnakeCaseName()
+        {
+            var modelTypes = typeof(Open311Constants).Assembly.GetTypes()
+                .Select(t => new
+                {
+                    t.Namespace,
+                    t.Name,
+                    DataContract = t.GetCustomAttributes(typeof(DataContractAttribute), true).FirstOrDefault() as DataContractAttribute
+                })
+                .Where(t => t.Namespace.EndsWith("Models") && t.DataContract != null);
+
+            var errorMessage = new StringBuilder();
+            var snakeCase = new SnakeCaseNamingStrategy(true, false);
+
+            foreach (var type in modelTypes)
+            {
+                var name = type.Name;
+
+                // exceptions:
+                if (typeof(ServiceAttribute).Name == name) name = "Attribute";
+                else if (typeof(ServiceRequest).Name == name) name = "Request";
+                else if (typeof(ServiceRequestCreated).Name == name) name = "Request";
+                else if (typeof(ServiceRequestToken).Name == name) name = "Request";
+                else if (typeof(ServiceRequestStatus).Name == name) name = "Status";
+                else if (typeof(ServiceType).Name == name) name = "type";
+
+                var expected = snakeCase.GetPropertyName(name, false);
+
+                if (type.DataContract.Name != expected)
+                {
+                    errorMessage.AppendLine(
+                        $"{type.Name} must be decorated with a snake_case name, ex: [DataContract(Name = \"{expected}\")].");
+                }
+            }
+
+            if (errorMessage.Length > 0)
+            {
+                throw new Exception(errorMessage.ToString());
+            }
+        }
+
+        [Fact]
+        public void AllModelsWithCollectionDataContractAttributesMustDefineSnakeCaseName()
+        {
+            var modelTypes = typeof(Open311Constants).Assembly.GetTypes()
+                .Select(t => new
+                {
+                    t.Namespace,
+                    t.Name,
+                    DataContract = t.GetCustomAttributes(typeof(CollectionDataContractAttribute), true).FirstOrDefault() as CollectionDataContractAttribute
+                })
+                .Where(t => t.Namespace.EndsWith("Models") && t.DataContract != null);
+
+            var errorMessage = new StringBuilder();
+            var snakeCase = new SnakeCaseNamingStrategy(true, false);
+
+            foreach (var type in modelTypes)
+            {
+                var name = type.Name;
+
+                // exceptions:
+                if (typeof(ServiceAttributes).Name == name) name = "Attributes";
+                else if (typeof(ServiceRequests<>).Name == name) name = "ServiceRequests";
+
+                var expected = snakeCase.GetPropertyName(name, false);
+                if (type.DataContract.Name != expected)
+                {
+                    errorMessage.AppendLine(
+                        $"{type.Name} must be decorated with a snake_case name, ex: [DataContract(Name = \"{expected}\")].");
                 }
             }
 

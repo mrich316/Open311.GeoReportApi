@@ -1,7 +1,6 @@
 ﻿namespace Open311.GeoReportApi.Services
 {
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.Threading;
     using System.Threading.Tasks;
     using InputModels;

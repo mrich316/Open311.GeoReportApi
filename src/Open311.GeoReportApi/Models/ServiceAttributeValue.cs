@@ -3,7 +3,7 @@
     using System;
     using System.Runtime.Serialization;
 
-    [DataContract(Namespace = Open311Constants.DefaultNamespace)]
+    [DataContract(Name = Open311Constants.ModelProperties.ServiceAttributeValue, Namespace = Open311Constants.DefaultNamespace)]
     public struct ServiceAttributeValue : IEquatable<ServiceAttributeValue>
     {
         public ServiceAttributeValue(string key, string value = null)

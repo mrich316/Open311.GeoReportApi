@@ -63,8 +63,8 @@
                 Assert.IsType<OkObjectResult>(result);
 
                 var actual = ((OkObjectResult)result).Value;
-                Assert.IsType<ServiceRequest>(actual);
-                Assert.Equal(expected, (ServiceRequest) actual);
+                Assert.IsType<ServiceRequests<ServiceRequest>>(actual);
+                Assert.Equal(new[] {expected}, (ServiceRequests<ServiceRequest>) actual);
             }
         }
 

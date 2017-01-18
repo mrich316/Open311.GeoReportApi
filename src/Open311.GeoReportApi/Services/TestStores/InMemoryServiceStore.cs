@@ -61,7 +61,7 @@
                 Lat = serviceRequest.Lat,
                 Long = serviceRequest.Long,
                 MediaUrl = serviceRequest.MediaUrl,
-                RequestedDatetime = DateTimeOffset.UtcNow,
+                RequestedDatetime = DateTimeOffset.Now,
                 ServiceCode = serviceRequest.ServiceCode,
                 ServiceRequestId = id,
                 Status = ServiceRequestStatus.Open

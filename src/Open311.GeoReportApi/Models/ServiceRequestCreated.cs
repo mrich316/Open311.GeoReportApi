@@ -2,7 +2,7 @@
 {
     using System.Runtime.Serialization;
 
-    [DataContract(Namespace = Open311Constants.DefaultNamespace)]
+    [DataContract(Name = Open311Constants.ModelProperties.ServiceRequestCreated, Namespace = Open311Constants.DefaultNamespace)]
     public class ServiceRequestCreated
     {
         /// <summary>

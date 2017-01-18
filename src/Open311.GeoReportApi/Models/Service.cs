@@ -5,7 +5,7 @@
     using System.Runtime.Serialization;
     using Newtonsoft.Json;
 
-    [DataContract(Namespace = Open311Constants.DefaultNamespace)]
+    [DataContract(Name = Open311Constants.ModelProperties.Service, Namespace = Open311Constants.DefaultNamespace)]
     public class Service
     {
         public Service()

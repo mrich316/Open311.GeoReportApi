@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Runtime.Serialization;
 
-    [DataContract(Namespace = Open311Constants.DefaultNamespace)]
+    [DataContract(Name = Open311Constants.ModelProperties.ServiceAttribute, Namespace = Open311Constants.DefaultNamespace)]
     public class ServiceAttribute
     {
         public ServiceAttribute()

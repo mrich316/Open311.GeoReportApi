@@ -12,15 +12,15 @@ framework to ease implementation of the `GeoReport v2` api from [Open311](http:/
 The `GeoReport v2` specification defines 6 methods. We aim to implement all of them
 except for [GET Service Request Id](http://wiki.open311.org/GeoReport_v2/#get-servicerequestid-from-a-token).
 
-| API Method               | Implementation Status |
-|--------------------------|-----------------------|
-| Service Discovery        | planned               |
-| `GET Service List`       | implemented           |
-| `GET Service Definition` | implemented           |
-| `POST Service Request`   | in development        |
-| `GET Service Request Id` | not planned           |
-| `GET Service Requests`   | implemented           |
-| `GET Service Request`    | implemented           |
+| API Method               | Implementation Status | Compliance |
+|--------------------------|-----------------------|------------|
+| Service Discovery        | planned               | not yet    |
+| `GET Service List`       | implemented           | not yet    |
+| `GET Service Definition` | implemented           | not yet    |
+| `POST Service Request`   | in development        | not yet    |
+| `GET Service Request Id` | not planned           | not yet    |
+| `GET Service Requests`   | implemented           | not yet    |
+| `GET Service Request`    | implemented           | not yet    |
 
 We currently support `xml` and `json` formats in utf-8. Please note the responses may not be fully
 compliants as of today, we are still in development.
@@ -50,6 +50,9 @@ what the api should accept or not.  From the official docs:
 > page at the Twitpic URL for the image given the conventions of Twitpic.com.
 > This could also be a URL to a media RSS feed where the clients can parse for media
 > in a more structured way.
+
+DateTimeOffset are not properly serialized in xml. A patch has been found:
+http://stackoverflow.com/questions/35866155/web-api-2-datetimeoffset-xml-serialization-issue
 
 ## Contributing
 

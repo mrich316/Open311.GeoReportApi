@@ -2,7 +2,7 @@
 {
     using System.Runtime.Serialization;
 
-    [DataContract(Namespace = Open311Constants.DefaultNamespace)]
+    [DataContract(Name = Open311Constants.ModelProperties.Error, Namespace = Open311Constants.DefaultNamespace)]
     public class Error
     {
         /// <summary>

@@ -34,7 +34,7 @@
                 .FirstOrDefault();
 
             return serviceRequest != null
-                ? Ok(serviceRequest)
+                ? Ok(new ServiceRequests<ServiceRequest>(serviceRequest))
                 : NotFound(404, $"{Open311Constants.ModelProperties.ServiceRequest} provided was not found.");
         }
 

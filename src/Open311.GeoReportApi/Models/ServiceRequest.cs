@@ -4,33 +4,38 @@
     using System.ComponentModel.DataAnnotations;
     using System.Runtime.Serialization;
 
-    [DataContract(Namespace = Open311Constants.DefaultNamespace)]
+    [DataContract(Name = Open311Constants.ModelProperties.ServiceRequest, Namespace = Open311Constants.DefaultNamespace)]
     public class ServiceRequest
     {
         /// <summary>
         /// The unique ID of the service request created.
         /// </summary>
+        [DataMember(Name = Open311Constants.ModelProperties.ServiceRequestId)]
         public string ServiceRequestId { get; set; }
 
         /// <summary>
         /// The current status of the service request.
         /// </summary>
+        [DataMember(Name = Open311Constants.ModelProperties.ServiceRequestStatus)]
         public ServiceRequestStatus Status { get; set; }
 
         /// <summary>
         /// Explanation of why status was changed to current state or more
         /// details on current status than conveyed with status alone.
         /// </summary>
+        [DataMember(Name = Open311Constants.ModelProperties.StatusNotes)]
         public string StatusNotes { get; set; }
 
         /// <summary>
         /// The human readable name of the service request type.
         /// </summary>
+        [DataMember(Name = Open311Constants.ModelProperties.ServiceName)]
         public string ServiceName { get; set; }
 
         /// <summary>
         /// The unique identifier for the service request type.
         /// </summary>
+        [DataMember(Name = Open311Constants.ModelProperties.ServiceCode)]
         public string ServiceCode { get; set; }
 
         /// <summary>
@@ -40,12 +45,14 @@
         /// </summary>
         [MaxLength(4000)]
         [Display(Name = Open311Constants.ModelProperties.Description)]
+        [DataMember(Name = Open311Constants.ModelProperties.Description)]
         public string Description { get; set; }
 
         /// <summary>
         /// The agency responsible for fulfilling or otherwise addressing the service request.
         /// May not be returned.
         /// </summary>
+        [DataMember(Name = Open311Constants.ModelProperties.AgencyResponsible)]
         public string AgencyResponsible { get; set; }
 
         /// <summary>
@@ -53,24 +60,28 @@
         /// or otherwise address the information reported.
         /// May not be returned.
         /// </summary>
+        [DataMember(Name = Open311Constants.ModelProperties.ServiceNotice)]
         public string ServiceNotice { get; set; }
 
         /// <summary>
         /// The date and time when the service request was made.
         /// </summary>
+        [DataMember(Name = Open311Constants.ModelProperties.RequestedDatetime)]
         public DateTimeOffset RequestedDatetime { get; set; }
 
         /// <summary>
         /// The date and time when the service request was last modified.
         /// For requests with status=closed, this will be the date the request was closed.
         /// </summary>
-        public DateTimeOffset UpdatedDatetime { get; set; }
+        [DataMember(Name = Open311Constants.ModelProperties.UpdatedDatetime)]
+        public DateTimeOffset? UpdatedDatetime { get; set; }
 
         /// <summary>
         /// The date and time when the service request can be expected to be fulfilled.
         /// This may be based on a service-specific service level agreement.
         /// May not be returned.
         /// </summary>
+        [DataMember(Name = Open311Constants.ModelProperties.ExpectedDatetime)]
         public DateTimeOffset? ExpectedDatetime { get; set; }
 
         /// <summary>
@@ -80,26 +91,31 @@
         /// This should be provided from most specific to most general geographic unit,
         /// eg: address number or cross streets, street name, neighborhood/district, city/town/village, county, postal code.
         /// </remarks>
+        [DataMember(Name = Open311Constants.ModelProperties.Address)]
         public string Address { get; set; }
 
         /// <summary>
         /// The internal address ID used by a jurisdiction’s master address repository or other addressing system.
         /// </summary>
+        [DataMember(Name = Open311Constants.ModelProperties.AddressId)]
         public string AddressId { get; set; }
 
         /// <summary>
         /// The postal code for the location of the service request.
         /// </summary>
+        [DataMember(Name = Open311Constants.ModelProperties.Zipcode)]
         public string Zipcode { get; set; }
 
         /// <summary>
         /// Latitude using the (WGS84) projection.
         /// </summary>
+        [DataMember(Name = Open311Constants.ModelProperties.Lat)]
         public double? Lat { get; set; }
 
         /// <summary>
         /// Longitude using the (WGS84) projection.
         /// </summary>
+        [DataMember(Name = Open311Constants.ModelProperties.Long)]
         public double? Long { get; set; }
 
         /// <summary>
@@ -113,6 +129,7 @@
         /// This could also be a URL to a media RSS feed where the clients can
         /// parse for media in a more structured way.
         /// </remarks>
+        [DataMember(Name = Open311Constants.ModelProperties.MediaUrl)]
         public Uri MediaUrl { get; set; }
     }
 }

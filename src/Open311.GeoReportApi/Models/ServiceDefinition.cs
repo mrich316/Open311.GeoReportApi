@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Runtime.Serialization;
 
-    [DataContract(Namespace = Open311Constants.DefaultNamespace)]
+    [DataContract(Name = Open311Constants.ModelProperties.ServiceDefinition, Namespace = Open311Constants.DefaultNamespace)]
     public class ServiceDefinition
     {
         /// <summary>
