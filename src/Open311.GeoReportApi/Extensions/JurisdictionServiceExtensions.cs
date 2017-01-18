@@ -12,12 +12,6 @@ namespace Open311.GeoReportApi.Services
             return jurisdiction.GetServiceStore(model.JurisdictionId);
         }
 
-        public static Task<IServiceRequestStore> GetServiceRequestStore<T>(this IJurisdictionService jurisdiction, T model)
-            where T : BaseInputModel
-        {
-            return jurisdiction.GetServiceRequestStore(model.JurisdictionId);
-        }
-
         public static Task<IServiceRequestSearchService> GetServiceRequestSearchService<T>(this IJurisdictionService jurisdiction, T model)
             where T : BaseInputModel
         {

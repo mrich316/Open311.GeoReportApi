@@ -1,7 +1,11 @@
 ﻿namespace Open311.GeoReportApi.Tests
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
     using GeoReportApi.Controllers;
+    using GeoReportApi.InputModels;
+    using Models;
     using Moq;
     using Ploeh.AutoFixture;
     using Services;
@@ -31,11 +35,19 @@
                         .Setup(sf => sf.GetServiceRequestSearchService(It.IsRegex(@"^(?!invalid)")))
                         .Returns(Task.FromResult(fixture.Create<IServiceRequestSearchService>()));
 
-                    storeFactory
-                        .Setup(sf => sf.GetServiceRequestStore(It.IsRegex(@"^(?!invalid)")))
-                        .Returns(Task.FromResult(fixture.Create<IServiceRequestStore>()));
-
                     return storeFactory.Object;
+                })
+            );
+
+            fixture.Customize<IServiceAttributeValidator>(c => c
+                .FromFactory(() =>
+                {
+                    var validator = new Mock<IServiceAttributeValidator>();
+                    validator
+                        .Setup(v => v.ValidateMetadata(It.IsAny<Service>(), It.IsAny<PostServiceRequestInputModel>()))
+                        .Returns(Task.FromResult(new List<ValidationResult>()));
+
+                    return validator.Object;
                 })
             );
         }

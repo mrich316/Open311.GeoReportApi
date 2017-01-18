@@ -1,5 +1,6 @@
 ﻿namespace Open311.GeoReportApi
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Filters;
     using Microsoft.AspNetCore.Builder;
@@ -56,18 +57,31 @@
                     options.SerializerSettings.Converters.Add(new StringEnumConverter(true));
                 });
 
-            services.AddScoped<IJurisdictionService, InMemoryJurisdictionService>();
-            services.AddScoped<InMemoryServiceRequestStore>();
-            services.AddScoped(provider => new InMemoryServiceStore(
+            services.AddSingleton<IJurisdictionService, InMemoryJurisdictionService>();
+            services.AddSingleton<IServiceAttributeValidator, DefaultServiceAttributeValidator>();
+            services.AddSingleton(provider => new InMemoryServiceStore(
                 new Service
                 {
                     Description = "Test service",
                     Group = "Envir",
                     Keywords = "asd,asd",
                     ServiceCode = "ENV-TO",
-                    Metadata = false,
                     ServiceName = "Environnement",
-                    Type = ServiceType.Realtime
+                    Type = ServiceType.Realtime,
+                    ServiceAttributes = new List<ServiceAttribute>
+                    {
+                        new ServiceAttribute
+                        {
+                            Code = "100",
+                            Datatype = ServiceAttributeDatatype.Singlevaluelist,
+                            Required = true,
+                            ServiceAttributeValues = new HashSet<ServiceAttributeValue>
+                            {
+                                new ServiceAttributeValue("a"),
+                                new ServiceAttributeValue("b")
+                            }
+                        }
+                    }
                 }
             ));
         }

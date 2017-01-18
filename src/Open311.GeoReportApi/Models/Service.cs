@@ -1,12 +1,18 @@
 ﻿namespace Open311.GeoReportApi.Models
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Runtime.Serialization;
     using Newtonsoft.Json;
 
     [DataContract(Namespace = Open311Constants.DefaultNamespace)]
     public class Service
     {
+        public Service()
+        {
+            ServiceAttributes = new List<ServiceAttribute>();
+        }
+
         /// <summary>
         /// The unique identifier for the service request type.
         /// </summary>
@@ -33,7 +39,7 @@
         /// Definition method is not needed.
         /// </summary>
         [DataMember(Name = Open311Constants.ModelProperties.Metadata)]
-        public bool Metadata { get; set; }
+        public bool Metadata => ServiceAttributes.Any();
 
         /// <summary>
         /// Service type.
@@ -57,6 +63,6 @@
 
         [IgnoreDataMember]
         [JsonIgnore]
-        public Dictionary<string, ServiceAttribute> ServiceAttributes { get; set; }
+        public List<ServiceAttribute> ServiceAttributes { get; set; }
     }
 }

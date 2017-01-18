@@ -1,5 +1,6 @@
 ﻿namespace Open311.GeoReportApi.InputModels
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
@@ -118,7 +119,7 @@
         /// </remarks>
         [Url]
         [Display(Name = Open311Constants.ModelProperties.MediaUrl)]
-        public string MediaUrl { get; set; }
+        public Uri MediaUrl { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

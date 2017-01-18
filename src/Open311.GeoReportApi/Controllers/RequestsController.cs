@@ -15,11 +15,15 @@
     public class RequestsController : GeoReportController
     {
         private readonly IJurisdictionService _jurisdiction;
+        private readonly IServiceAttributeValidator _attributeValidator;
 
-        public RequestsController(IJurisdictionService jurisdiction)
+        public RequestsController(IJurisdictionService jurisdiction, IServiceAttributeValidator attributeValidator)
         {
             if (jurisdiction == null) throw new ArgumentNullException(nameof(jurisdiction));
+            if (attributeValidator == null) throw new ArgumentNullException(nameof(attributeValidator));
+
             _jurisdiction = jurisdiction;
+            _attributeValidator = attributeValidator;
         }
 
         [HttpGet("requests/{serviceRequestId}.{format}")]
@@ -64,24 +68,25 @@
         [HttpPost("requests.{format}")]
         public async Task<IActionResult> PostServiceRequest(PostServiceRequestInputModel model)
         {
-            // TODO: Requires API key.
+            // TODO: Requires API key. Can we use AuthorizeAttribute ?
 
             var serviceStore = await _jurisdiction.GetServiceStore(model);
             var service = await serviceStore.GetService(model.ServiceCode, CancellationToken.None);
 
             if (service == null)
             {
-                return NotFound(404, $"{Open311Constants.ModelProperties.ServiceCode} was not found.");
+                return NotFound(404,
+                    $"{Open311Constants.ModelProperties.ServiceCode} was not found in jurisdiction.");
             }
 
-            if (service.Metadata)
+            var validationErrors = await _attributeValidator.ValidateMetadata(service, model);
+            if (validationErrors != null && validationErrors.Any())
             {
-                // TODO: Validate attributes.
+                var attributeErrors = validationErrors.Select(e => new Error {Code = 400, Description = e.ErrorMessage});
+                return BadRequest(new Errors(attributeErrors));
             }
 
-            // TODO: Transform to entity, save.
-            var requestStore = await _jurisdiction.GetServiceRequestStore(model);
-            var created = await requestStore.Create();
+            var created = await serviceStore.Create(model);
 
             return Ok(new ServiceRequests<ServiceRequestCreated>(created));
         }

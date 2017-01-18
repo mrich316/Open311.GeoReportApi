@@ -6,6 +6,11 @@
     [DataContract(Namespace = Open311Constants.DefaultNamespace)]
     public class ServiceAttribute
     {
+        public ServiceAttribute()
+        {
+            ServiceAttributeValues = new HashSet<ServiceAttributeValue>();
+        }
+
         /// <summary>
         ///     <c>true</c> denotes that user input is needed
         ///     <c>false</c> means the attribute is only used to present information to the user within the description field
@@ -48,6 +53,6 @@
         ///     or <see cref="ServiceAttributeDatatype.Multivaluelist" />.
         ///     This is analogous to the select input in an html page.
         /// </summary>
-        public List<ServiceAttributeValue> ServiceAttributeValues { get; set; }
+        public HashSet<ServiceAttributeValue> ServiceAttributeValues { get; set; }
     }
 }
