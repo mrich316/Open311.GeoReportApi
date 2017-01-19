@@ -86,6 +86,7 @@
 
             options.SerializerSettings.ContractResolver = contractResolver;
             options.SerializerSettings.Formatting = Formatting.Indented;
+            options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             options.SerializerSettings.Converters.Add(new StringEnumConverter(true));
         }
 
