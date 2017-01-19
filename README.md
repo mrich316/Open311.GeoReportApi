@@ -15,12 +15,12 @@ except for [GET Service Request Id](http://wiki.open311.org/GeoReport_v2/#get-se
 | API Method               | Implementation Status | Compliance |
 |--------------------------|-----------------------|------------|
 | Service Discovery        | planned               | not yet    |
-| `GET Service List`       | implemented           | not yet    |
-| `GET Service Definition` | implemented           | not yet    |
-| `POST Service Request`   | in development        | not yet    |
+| `GET Service List`       | implemented           | json only  |
+| `GET Service Definition` | implemented           | json only  |
+| `POST Service Request`   | implemented           | json only  |
 | `GET Service Request Id` | not planned           | not yet    |
-| `GET Service Requests`   | implemented           | not yet    |
-| `GET Service Request`    | implemented           | not yet    |
+| `GET Service Requests`   | implemented           | json only  |
+| `GET Service Request`    | implemented           | json only  |
 
 We currently support `xml` and `json` formats in utf-8. Please note the responses may not be fully
 compliants as of today, we are still in development.
@@ -32,10 +32,18 @@ solution without any development efforts.
 
 ## Known Problems and Limitations
 
+Model bindings are not fully functional. For example: submitting a request with attributes is not working
+as expected. Also, we are missing a lot of unit tests in model logics and value providers.
+Work is being planned to address these issues.
+
 The current xml signature includes the default namespace (`xmlns:i="http://www.w3.org/2001/XMLSchema-instance"`).
 This may be a problem for custom xml deserialization routines.
 
-The published signatures by our implementation are not validated yet for compliance yet.
+DateTimeOffset are not properly serialized in xml. A
+[patch](http://stackoverflow.com/questions/35866155/web-api-2-datetimeoffset-xml-serialization-issue)
+has been found.
+
+The published signatures by our implementation are not validated for compliance (yet).
 Once the code stabilize, we will make sure it is on par with the standard.
 
 The jurisdiction is mandatory in our implementation, but it can be set to any default value
@@ -51,8 +59,10 @@ what the api should accept or not.  From the official docs:
 > This could also be a URL to a media RSS feed where the clients can parse for media
 > in a more structured way.
 
-DateTimeOffset are not properly serialized in xml. A patch has been found:
-http://stackoverflow.com/questions/35866155/web-api-2-datetimeoffset-xml-serialization-issue
+## Future developments
+
+We will try to create a reusable library that can be embedded in any OWIN application.
+This should simplify distribution and adoption by the community.
 
 ## Contributing
 
