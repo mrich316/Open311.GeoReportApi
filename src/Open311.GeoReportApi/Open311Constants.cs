@@ -17,6 +17,8 @@
             public const string AddressString = "address_string";
             public const string AgencyResponsible = "agency_responsible";
             public const string Code = "code";
+            public const string Datatype = "datatype";
+            public const string DatatypeDescription = "datatype_description";
             public const string Description = "description";
             public const string DeviceId = "device_id";
             public const string Email = "email";
@@ -26,19 +28,22 @@
             public const string FirstName = "first_name";
             public const string Group = "group";
             public const string JurisdictionId = "jurisdiction_id";
+            public const string Key = "key";
             public const string Keywords = "keywords";
             public const string LastName = "last_name";
             public const string Lat = "lat";
             public const string Long = "long";
             public const string MediaUrl = "media_url";
             public const string Metadata = "metadata";
+            public const string Order = "order";
             public const string Phone = "phone";
             public const string RequestedDatetime = "requested_datetime";
+            public const string Required = "required";
             public const string Service = "service";
             public const string ServiceAttribute = "attribute";
-            public const string ServiceAttributeDatatype = "service_attribute_datatype";
+            public const string ServiceAttributeDatatype = "datatype";
             public const string ServiceAttributes = "attributes";
-            public const string ServiceAttributeValue = "service_attribute_value";
+            public const string ServiceAttributeValue = "value";
             public const string ServiceCode = "service_code";
             public const string ServiceDefinition = "service_definition";
             public const string ServiceName = "service_name";
@@ -55,6 +60,9 @@
             public const string Token = "token";
             public const string Type = "type";
             public const string UpdatedDatetime = "updated_datetime";
+            public const string Value = "value";
+            public const string Values = "values";
+            public const string Variable = "variable";
             public const string Zipcode = "zipcode";
         }
     }

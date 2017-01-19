@@ -14,8 +14,10 @@
             Value = value;
         }
 
+        [DataMember(Name = Open311Constants.ModelProperties.Key)]
         public string Key { get; }
 
+        [DataMember(Name = Open311Constants.ModelProperties.Value)]
         public string Value { get; set; }
 
         public override int GetHashCode()

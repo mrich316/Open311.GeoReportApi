@@ -68,14 +68,14 @@
                     ServiceCode = "ENV-TO",
                     ServiceName = "Environnement",
                     Type = ServiceType.Realtime,
-                    ServiceAttributes = new List<ServiceAttribute>
+                    Attributes = new ServiceAttributes
                     {
                         new ServiceAttribute
                         {
                             Code = "100",
                             Datatype = ServiceAttributeDatatype.Singlevaluelist,
                             Required = true,
-                            ServiceAttributeValues = new HashSet<ServiceAttributeValue>
+                            Values = new HashSet<ServiceAttributeValue>
                             {
                                 new ServiceAttributeValue("a"),
                                 new ServiceAttributeValue("b")

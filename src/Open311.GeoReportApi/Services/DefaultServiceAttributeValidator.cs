@@ -24,7 +24,7 @@
             var results = new List<ValidationResult>();
             var requestAttributes = serviceRequest.Attribute ?? new Dictionary<string, string>();
 
-            foreach (var serviceAttribute in service.ServiceAttributes)
+            foreach (var serviceAttribute in service.Attributes)
             {
                 if (requestAttributes.ContainsKey(serviceAttribute.Code))
                 {
@@ -57,9 +57,9 @@
 
                 case ServiceAttributeDatatype.Singlevaluelist:
 
-                    if (!attribute.ServiceAttributeValues.Contains(new ServiceAttributeValue(value ?? string.Empty)))
+                    if (!attribute.Values.Contains(new ServiceAttributeValue(value ?? string.Empty)))
                     {
-                        var options = string.Join("', '", attribute.ServiceAttributeValues);
+                        var options = string.Join("', '", attribute.Values);
                         validationResults.Add(new ValidationResult(
                             $"invalid option for attribute[{attribute.Code}]. Valid options are: '{options}'."));
                     }
@@ -84,9 +84,9 @@
                         .Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries)
                         .Select(v => new ServiceAttributeValue(v));
 
-                    if (values.Any(v => !attribute.ServiceAttributeValues.Contains(new ServiceAttributeValue(value))))
+                    if (values.Any(v => !attribute.Values.Contains(new ServiceAttributeValue(value))))
                     {
-                        var options = string.Join("', '", attribute.ServiceAttributeValues);
+                        var options = string.Join("', '", attribute.Values);
                         validationResults.Add(new ValidationResult(
                             $"invalid option for attribute[{attribute.Code}]. Valid options are: '{options}'."));
                     }

@@ -7,6 +7,9 @@
     using GeoReportApi.InputModels;
     using Models;
     using Moq;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using Newtonsoft.Json.Serialization;
     using Ploeh.AutoFixture;
     using Services;
 
@@ -49,6 +52,25 @@
 
                     return validator.Object;
                 })
+            );
+
+            // TODO: Find a way to pump this from the Startup class.
+            fixture.Customize<JsonSerializerSettings>(c => c
+                .OmitAutoProperties()
+                .Do(x =>
+                {
+                    var contractResolver = new DefaultContractResolver
+                    {
+                        NamingStrategy = new SnakeCaseNamingStrategy(true, false)
+                    };
+
+                    x.ContractResolver = contractResolver;
+                    x.Formatting = Formatting.Indented;
+                    x.Converters.Add(new StringEnumConverter(true));
+                }));
+
+            fixture.Customize<SnakeCaseNamingStrategy>(c => c
+                .FromFactory(() => new SnakeCaseNamingStrategy(true, false))
             );
         }
     }

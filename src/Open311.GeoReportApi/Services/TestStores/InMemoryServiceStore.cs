@@ -45,7 +45,7 @@
                 : new ServiceDefinition
                 {
                     ServiceCode = serviceCode,
-                    ServiceAttributes = service.ServiceAttributes
+                    Attributes = service.Attributes
                 };
         }
 

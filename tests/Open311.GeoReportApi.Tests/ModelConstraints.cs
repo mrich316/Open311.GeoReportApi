@@ -237,6 +237,8 @@
 
                 // exceptions:
                 if (typeof(ServiceAttribute).Name == name) name = "Attribute";
+                else if (typeof(ServiceAttributeDatatype).Name == name) name = "Datatype";
+                else if (typeof(ServiceAttributeValue).Name == name) name = "Value";
                 else if (typeof(ServiceRequest).Name == name) name = "Request";
                 else if (typeof(ServiceRequestCreated).Name == name) name = "Request";
                 else if (typeof(ServiceRequestToken).Name == name) name = "Request";

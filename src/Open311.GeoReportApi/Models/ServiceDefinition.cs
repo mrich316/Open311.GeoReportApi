@@ -12,8 +12,10 @@
         /// </summary>
         [Required]
         [Display(Name = Open311Constants.ModelProperties.ServiceCode)]
+        [DataMember(Name = Open311Constants.ModelProperties.ServiceCode)]
         public string ServiceCode { get; set; }
 
-        public List<ServiceAttribute> ServiceAttributes { get; set; }
+        [DataMember(Name = Open311Constants.ModelProperties.ServiceAttributes)]
+        public ServiceAttributes Attributes { get; set; }
     }
 }

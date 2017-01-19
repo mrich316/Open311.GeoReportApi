@@ -18,8 +18,13 @@
         {
         }
 
-        public Services(IEnumerable<Service> collection)
-            : base(collection)
+        public Services(IEnumerable<Service> services)
+            : base(services)
+        {
+        }
+
+        public Services(params Service[] services)
+            : base(services)
         {
         }
     }

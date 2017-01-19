@@ -8,11 +8,13 @@
         /// <summary>
         /// The unique ID for the service request created. This can be used to call the GET Service Request method.
         /// </summary>
+        [DataMember(Name = Open311Constants.ModelProperties.ServiceRequestId)]
         public string ServiceRequestId { get; set; }
 
         /// <summary>
         /// The token ID used to make this call.
         /// </summary>
+        [DataMember(Name = Open311Constants.ModelProperties.Token)]
         public string Token { get; set; }
     }
 }
