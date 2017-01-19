@@ -35,6 +35,7 @@
             public const string Long = "long";
             public const string MediaUrl = "media_url";
             public const string Metadata = "metadata";
+            public const string Name = "name";
             public const string Order = "order";
             public const string Phone = "phone";
             public const string RequestedDatetime = "requested_datetime";
@@ -60,7 +61,6 @@
             public const string Token = "token";
             public const string Type = "type";
             public const string UpdatedDatetime = "updated_datetime";
-            public const string Value = "value";
             public const string Values = "values";
             public const string Variable = "variable";
             public const string Zipcode = "zipcode";

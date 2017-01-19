@@ -12,22 +12,22 @@ framework to ease implementation of the `GeoReport v2` api from [Open311](http:/
 The `GeoReport v2` specification defines 6 methods. We aim to implement all of them
 except for [GET Service Request Id](http://wiki.open311.org/GeoReport_v2/#get-servicerequestid-from-a-token).
 
-| API Method               | Implementation Status | Compliance |
-|--------------------------|-----------------------|------------|
-| Service Discovery        | planned               | not yet    |
-| `GET Service List`       | implemented           | json only  |
-| `GET Service Definition` | implemented           | json only  |
-| `POST Service Request`   | implemented           | json only  |
-| `GET Service Request Id` | not planned           | not yet    |
-| `GET Service Requests`   | implemented           | json only  |
-| `GET Service Request`    | implemented           | json only  |
-
 We currently support `xml` and `json` formats in utf-8. Please note the responses may not be fully
 compliants as of today, we are still in development.
 
+| API Method               | Implementation Status | Compliance |
+|--------------------------|-----------------------|------------|
+| Service Discovery        | planned               |            |
+| `GET Service List`       | implemented           | xml/json   |
+| `GET Service Definition` | implemented           | xml/json   |
+| `POST Service Request`   | implemented           | xml/json   |
+| `GET Service Request Id` | not planned           |            |
+| `GET Service Requests`   | implemented           | json only  |
+| `GET Service Request`    | implemented           | json only  |
+
 Since the storage of service requests is highly implementation specific, only interfaces are provided.
 The implementation is *YOUR* responsability. It can really be any sources: web services, elastic storage,
-databases, erp, etc.  To evaluate the framework, in-memory stores are provided, so you could test the
+databases, erp, etc.  To evaluate the framework, in-memory stores are provided, so you can test the
 solution without any development efforts.
 
 ## Known Problems and Limitations
@@ -37,13 +37,14 @@ as expected. Also, we are missing a lot of unit tests in model logics and value 
 Work is being planned to address these issues.
 
 The current xml signature includes the default namespace (`xmlns:i="http://www.w3.org/2001/XMLSchema-instance"`).
-This may be a problem for custom xml deserialization routines.
+Also, the xml serializer used always sort properties alphabetically.
+This may cause problems for custom xml deserialization routines.
 
 DateTimeOffset are not properly serialized in xml. A
 [patch](http://stackoverflow.com/questions/35866155/web-api-2-datetimeoffset-xml-serialization-issue)
 has been found.
 
-The published signatures by our implementation are not validated for compliance (yet).
+The published signatures by our implementation are not validated for official compliance (yet).
 Once the code stabilize, we will make sure it is on par with the standard.
 
 The jurisdiction is mandatory in our implementation, but it can be set to any default value
@@ -61,7 +62,7 @@ what the api should accept or not.  From the official docs:
 
 ## Future developments
 
-We will try to create a reusable library that can be embedded in any OWIN application.
+We will try to create a reusable (and documented) library that can be embedded in any OWIN application.
 This should simplify distribution and adoption by the community.
 
 ## Contributing

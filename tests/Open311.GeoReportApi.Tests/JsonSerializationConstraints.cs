@@ -76,7 +76,7 @@
         {
             var expected = $@"{{
   ""key"": ""{sut.Key}"",
-  ""value"": ""{sut.Value}""
+  ""name"": ""{sut.Name}""
 }}";
             var actual = JsonConvert.SerializeObject(sut, serializerSettings);
 
@@ -102,7 +102,7 @@
   ""values"": [
     {{
       ""key"": ""{attributeValue.Key}"",
-      ""value"": ""{attributeValue.Value}""
+      ""name"": ""{attributeValue.Name}""
     }}
   ]
 }}";
@@ -137,7 +137,7 @@
       ""values"": [
         {{
           ""key"": ""{attributeValue.Key}"",
-          ""value"": ""{attributeValue.Value}""
+          ""name"": ""{attributeValue.Name}""
         }}
       ]
     }}

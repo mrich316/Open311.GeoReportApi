@@ -1,7 +1,6 @@
 ﻿namespace Open311.GeoReportApi
 {
     using System.Collections.Generic;
-    using System.Linq;
     using Filters;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -29,8 +28,7 @@
                 .AddMvcOptions(options =>
                 {
                     // Add xml output formatter and mapping.
-                    options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter(
-                        new System.Xml.XmlWriterSettings {Indent = true}));
+                    options.OutputFormatters.Add(CreateXmlSerializerOutputFormatter());
 
                     options.FormatterMappings.SetMediaTypeMappingForFormat("xml",
                         new MediaTypeHeaderValue("application/xml"));
@@ -88,6 +86,15 @@
             options.SerializerSettings.Formatting = Formatting.Indented;
             options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             options.SerializerSettings.Converters.Add(new StringEnumConverter(true));
+        }
+
+        public XmlDataContractSerializerOutputFormatter CreateXmlSerializerOutputFormatter()
+        {
+            return new XmlDataContractSerializerOutputFormatter(
+                new System.Xml.XmlWriterSettings {Indent = true})
+            {
+                SerializerSettings = {SerializeReadOnlyTypes = true}
+            };
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

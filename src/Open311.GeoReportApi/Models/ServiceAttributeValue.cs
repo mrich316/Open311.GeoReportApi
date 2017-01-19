@@ -11,14 +11,14 @@
             if (key == null) throw new ArgumentNullException(nameof(key));
 
             Key = key;
-            Value = value;
+            Name = value;
         }
 
         [DataMember(Name = Open311Constants.ModelProperties.Key)]
         public string Key { get; }
 
-        [DataMember(Name = Open311Constants.ModelProperties.Value)]
-        public string Value { get; set; }
+        [DataMember(Name = Open311Constants.ModelProperties.Name)]
+        public string Name { get; set; }
 
         public override int GetHashCode()
         {
