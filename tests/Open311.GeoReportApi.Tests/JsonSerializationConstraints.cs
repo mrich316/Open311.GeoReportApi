@@ -227,9 +227,9 @@
   ""description"": ""{sut.Description}"",
   ""agency_responsible"": ""{sut.AgencyResponsible}"",
   ""service_notice"": ""{sut.ServiceNotice}"",
-  ""requested_datetime"": ""{sut.RequestedDatetime:o}"",
-  ""updated_datetime"": ""{sut.UpdatedDatetime:o}"",
-  ""expected_datetime"": ""{sut.ExpectedDatetime:o}"",
+  ""requested_datetime"": {JsonConvert.SerializeObject(sut.RequestedDatetime, serializerSettings)},
+  ""updated_datetime"": {JsonConvert.SerializeObject(sut.UpdatedDatetime, serializerSettings)},
+  ""expected_datetime"": {JsonConvert.SerializeObject(sut.ExpectedDatetime, serializerSettings)},
   ""address"": ""{sut.Address}"",
   ""address_id"": ""{sut.AddressId}"",
   ""zipcode"": ""{sut.Zipcode}"",
@@ -262,9 +262,9 @@
     ""description"": ""{sut.Description}"",
     ""agency_responsible"": ""{sut.AgencyResponsible}"",
     ""service_notice"": ""{sut.ServiceNotice}"",
-    ""requested_datetime"": ""{sut.RequestedDatetime:o}"",
-    ""updated_datetime"": ""{sut.UpdatedDatetime:o}"",
-    ""expected_datetime"": ""{sut.ExpectedDatetime:o}"",
+    ""requested_datetime"": {JsonConvert.SerializeObject(sut.RequestedDatetime, serializerSettings)},
+    ""updated_datetime"": {JsonConvert.SerializeObject(sut.UpdatedDatetime, serializerSettings)},
+    ""expected_datetime"": {JsonConvert.SerializeObject(sut.ExpectedDatetime, serializerSettings)},
     ""address"": ""{sut.Address}"",
     ""address_id"": ""{sut.AddressId}"",
     ""zipcode"": ""{sut.Zipcode}"",
@@ -276,6 +276,19 @@
             var actual = JsonConvert.SerializeObject(new ServiceRequests<ServiceRequest>(sut), serializerSettings);
 
             Assert.Equal(expected, actual);
+        }
+
+        // This test DateTimeOffset serializations, because DateTimeOffset.ToString("o")
+        // can be zero-padded, but JSON.NET serialization removes this padding.
+        //                                      ↓
+        // Ex: Expected: ···2-28T06:37:23.1508190-05:00" // DateTimeOffset.ToString("o")
+        //     Actual:   ···2-28T06:37:23.150819-05:00"  // JsonConvert.Serialize(...)
+        //                                      ↑
+        [Theory, TestConventions]
+        public void SerializerSettingsHasIsoDate(JsonSerializerSettings serializerSettings)
+        {
+            Assert.Equal(DateTimeZoneHandling.RoundtripKind, serializerSettings.DateTimeZoneHandling);
+            Assert.Equal(DateFormatHandling.IsoDateFormat, serializerSettings.DateFormatHandling);
         }
     }
 }

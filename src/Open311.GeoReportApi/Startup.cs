@@ -5,6 +5,7 @@
     using Filters;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.Extensions.DependencyInjection;
@@ -45,17 +46,7 @@
                     options.Filters.Add(typeof(ValidateModelStateAttribute));
                     options.Filters.Add(typeof(ValidateJurisdictionAttribute));
                 })
-                .AddJsonOptions(options =>
-                {
-                    var contractResolver = new DefaultContractResolver
-                    {
-                        NamingStrategy = namingStrategy
-                    };
-
-                    options.SerializerSettings.ContractResolver = contractResolver;
-                    options.SerializerSettings.Formatting = Formatting.Indented;
-                    options.SerializerSettings.Converters.Add(new StringEnumConverter(true));
-                });
+                .AddJsonOptions(SetupJsonOptions);
 
             services.AddSingleton<IJurisdictionService, InMemoryJurisdictionService>();
             services.AddSingleton<IServiceAttributeValidator, DefaultServiceAttributeValidator>();
@@ -84,6 +75,18 @@
                     }
                 }
             ));
+        }
+
+        public void SetupJsonOptions(MvcJsonOptions options)
+        {
+            var contractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new SnakeCaseNamingStrategy(true, false)
+            };
+
+            options.SerializerSettings.ContractResolver = contractResolver;
+            options.SerializerSettings.Formatting = Formatting.Indented;
+            options.SerializerSettings.Converters.Add(new StringEnumConverter(true));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

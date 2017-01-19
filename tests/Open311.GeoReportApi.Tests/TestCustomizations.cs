@@ -2,9 +2,11 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Runtime.Serialization;
     using System.Threading.Tasks;
     using GeoReportApi.Controllers;
     using GeoReportApi.InputModels;
+    using Microsoft.AspNetCore.Mvc;
     using Models;
     using Moq;
     using Newtonsoft.Json;
@@ -54,23 +56,28 @@
                 })
             );
 
-            // TODO: Find a way to pump this from the Startup class.
             fixture.Customize<JsonSerializerSettings>(c => c
-                .OmitAutoProperties()
-                .Do(x =>
+                .FromFactory(() =>
                 {
-                    var contractResolver = new DefaultContractResolver
-                    {
-                        NamingStrategy = new SnakeCaseNamingStrategy(true, false)
-                    };
+                    var jsonOptions = new MvcJsonOptions();
+                    new Startup().SetupJsonOptions(jsonOptions);
 
-                    x.ContractResolver = contractResolver;
-                    x.Formatting = Formatting.Indented;
-                    x.Converters.Add(new StringEnumConverter(true));
-                }));
+                    return jsonOptions.SerializerSettings;
+                })
+                .OmitAutoProperties()
+            );
 
             fixture.Customize<SnakeCaseNamingStrategy>(c => c
-                .FromFactory(() => new SnakeCaseNamingStrategy(true, false))
+                .FromFactory(() =>
+                {
+                    var jsonOptions = new MvcJsonOptions();
+                    new Startup().SetupJsonOptions(jsonOptions);
+
+                    var contractResolver = (DefaultContractResolver) jsonOptions.SerializerSettings.ContractResolver;
+
+                    return (SnakeCaseNamingStrategy) contractResolver.NamingStrategy;
+                })
+                .OmitAutoProperties()
             );
         }
     }
