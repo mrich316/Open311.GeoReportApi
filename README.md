@@ -9,8 +9,8 @@ framework to ease implementation of the `GeoReport v2` api from [Open311](http:/
 
 ## Implementation Status
 
-The `GeoReport v2` specification defines 6 methods. We aim to implement all of them
-except for [GET Service Request Id](http://wiki.open311.org/GeoReport_v2/#get-servicerequestid-from-a-token).
+The [`GeoReport v2`](http://wiki.open311.org/GeoReport_v2/) specification defines 6 methods.
+We aim to implement all of them except for `GET Service Request Id`.
 
 We currently support `xml` and `json` formats in utf-8. Please note the responses may not be fully
 compliants as of today, we are still in development.
@@ -22,8 +22,8 @@ compliants as of today, we are still in development.
 | `GET Service Definition` | implemented           | xml/json   |
 | `POST Service Request`   | implemented           | xml/json   |
 | `GET Service Request Id` | not planned           |            |
-| `GET Service Requests`   | implemented           | json only  |
-| `GET Service Request`    | implemented           | json only  |
+| `GET Service Requests`   | implemented           | xml/json   |
+| `GET Service Request`    | implemented           | xml/json   |
 
 Since the storage of service requests is highly implementation specific, only interfaces are provided.
 The implementation is *YOUR* responsability. It can really be any sources: web services, elastic storage,
@@ -37,12 +37,8 @@ as expected. Also, we are missing a lot of unit tests in model logics and value 
 Work is being planned to address these issues.
 
 The current xml signature includes the default namespace (`xmlns:i="http://www.w3.org/2001/XMLSchema-instance"`).
-Also, the xml serializer used always sort properties alphabetically.
-This may cause problems for custom xml deserialization routines.
-
-DateTimeOffset are not properly serialized in xml. A
-[patch](http://stackoverflow.com/questions/35866155/web-api-2-datetimeoffset-xml-serialization-issue)
-has been found.
+Also, the xml serializer used ([DataContractSerializer](https://msdn.microsoft.com/en-us/library/system.runtime.serialization.datacontractserializer(v=vs.110).aspx))
+always sort properties alphabetically. This may cause problems for custom xml deserialization routines.
 
 The published signatures by our implementation are not validated for official compliance (yet).
 Once the code stabilize, we will make sure it is on par with the standard.

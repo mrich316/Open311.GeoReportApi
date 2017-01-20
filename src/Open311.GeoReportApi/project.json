@@ -1,4 +1,7 @@
 {
+  "title": "Open311.GeoReportApi",
+  "version": "0.0.1",
+  "language": "en-US",
   "dependencies": {
     "Microsoft.AspNetCore.Diagnostics": "1.1.0",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",
