@@ -3,10 +3,16 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Runtime.Serialization;
+    using Newtonsoft.Json;
 
     [DataContract(Name = Open311Constants.ModelProperties.ServiceRequest, Namespace = Open311Constants.DefaultNamespace)]
     public class ServiceRequest
     {
+        public ServiceRequest()
+        {
+            RequestedDatetime = DateTimeOffset.Now;
+        }
+
         /// <summary>
         /// The unique ID of the service request created.
         /// </summary>
@@ -66,23 +72,35 @@
         /// <summary>
         /// The date and time when the service request was made.
         /// </summary>
-        [DataMember(Name = Open311Constants.ModelProperties.RequestedDatetime)]
+        [IgnoreDataMember]
+        [JsonIgnore]
         public DateTimeOffset RequestedDatetime { get; set; }
+
+        [DataMember(Name = Open311Constants.ModelProperties.RequestedDatetime)]
+        internal string RequestedDatetimeString => RequestedDatetime.ToString("o");
 
         /// <summary>
         /// The date and time when the service request was last modified.
         /// For requests with status=closed, this will be the date the request was closed.
         /// </summary>
-        [DataMember(Name = Open311Constants.ModelProperties.UpdatedDatetime)]
+        [IgnoreDataMember]
+        [JsonIgnore]
         public DateTimeOffset? UpdatedDatetime { get; set; }
+
+        [DataMember(Name = Open311Constants.ModelProperties.UpdatedDatetime)]
+        internal string UpdatedDatetimeString => UpdatedDatetime?.ToString("o");
 
         /// <summary>
         /// The date and time when the service request can be expected to be fulfilled.
         /// This may be based on a service-specific service level agreement.
         /// May not be returned.
         /// </summary>
-        [DataMember(Name = Open311Constants.ModelProperties.ExpectedDatetime)]
+        [IgnoreDataMember]
+        [JsonIgnore]
         public DateTimeOffset? ExpectedDatetime { get; set; }
+
+        [DataMember(Name = Open311Constants.ModelProperties.ExpectedDatetime)]
+        internal string ExpectedDatetimeString => ExpectedDatetime?.ToString("o");
 
         /// <summary>
         /// Human readable address or description of location.

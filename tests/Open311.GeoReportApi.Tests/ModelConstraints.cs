@@ -24,7 +24,9 @@
             var typesWithValidationAttributes = modelTypes.Select(t => new
             {
                 t.Name,
-                Properties = t.GetProperties()
+                Properties = t.GetProperties(BindingFlags.Instance |
+                                             BindingFlags.NonPublic |
+                                             BindingFlags.Public)
                     .Where(tprop => tprop.GetCustomAttributes(typeof(ValidationAttribute), true).Any())
             });
 
@@ -87,7 +89,9 @@
             var typesWithValidationAttributes = modelTypes.Select(t => new
             {
                 t.Name,
-                Properties = t.GetProperties()
+                Properties = t.GetProperties(BindingFlags.Instance |
+                                             BindingFlags.NonPublic |
+                                             BindingFlags.Public)
                     .Where(tprop => tprop.GetCustomAttributes(typeof(DataMemberAttribute), true).Any())
             });
 
@@ -98,10 +102,20 @@
             {
                 foreach (var prop in type.Properties)
                 {
+                    var propName = prop.Name;
+
+                    // exceptions
+                    if (prop.Name == nameof(ServiceRequest.ExpectedDatetimeString)
+                        || prop.Name == nameof(ServiceRequest.RequestedDatetimeString)
+                        || prop.Name == nameof(ServiceRequest.UpdatedDatetimeString))
+                    {
+                        propName = prop.Name.Replace("String", string.Empty);
+                    }
+
                     var member =
                         prop.GetCustomAttributes(typeof(DataMemberAttribute), true).FirstOrDefault() as DataMemberAttribute;
 
-                    var expected = snakeCase.GetPropertyName(prop.Name, false);
+                    var expected = snakeCase.GetPropertyName(propName, false);
                     var actual = member?.Name;
 
                     if (expected != actual)

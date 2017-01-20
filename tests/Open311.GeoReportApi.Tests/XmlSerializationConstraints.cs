@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Models;
+    using Newtonsoft.Json.Serialization;
     using Xunit;
 
     public class XmlSerializationConstraints
@@ -201,7 +202,7 @@
         }
 
         [Theory, TestConventions]
-        public async Task ServiceRequest(ServiceRequest sut)
+        public async Task ServiceRequest(ServiceRequest sut, SnakeCaseNamingStrategy snakeCase)
         {
             // Autofixture creates a uri with scheme+host only and JSON.NET strips the last slash on this condition.
             sut.MediaUrl = new Uri(sut.MediaUrl, "/blah/");
@@ -216,12 +217,12 @@
   <long>{sut.Long}</long>
   <media_url>{sut.MediaUrl}</media_url>
   <requested_datetime>{sut.RequestedDatetime:o}</requested_datetime>
-  <service_name>{sut.ServiceName}</service_name>
   <service_code>{sut.ServiceCode}</service_code>
-  <service_request_id>{sut.ServiceRequestId}</service_request_id>
-  <status>{sut.Status}</status>
-  <status_notes>{sut.StatusNotes}</status_notes>
+  <service_name>{sut.ServiceName}</service_name>
   <service_notice>{sut.ServiceNotice}</service_notice>
+  <service_request_id>{sut.ServiceRequestId}</service_request_id>
+  <status>{snakeCase.GetPropertyName(sut.Status.ToString(), false)}</status>
+  <status_notes>{sut.StatusNotes}</status_notes>
   <updated_datetime>{sut.UpdatedDatetime:o}</updated_datetime>
   <zipcode>{sut.Zipcode}</zipcode>
 </request>";
@@ -232,7 +233,7 @@
         }
 
         [Theory, TestConventions]
-        public async Task ServiceRequestsOfServiceRequest(ServiceRequest sut)
+        public async Task ServiceRequestsOfServiceRequest(ServiceRequest sut, SnakeCaseNamingStrategy snakeCase)
         {
             // Autofixture creates a uri with scheme+host only and JSON.NET strips the last slash on this condition.
             sut.MediaUrl = new Uri(sut.MediaUrl, "/blah/");
@@ -248,12 +249,12 @@
     <long>{sut.Long}</long>
     <media_url>{sut.MediaUrl}</media_url>
     <requested_datetime>{sut.RequestedDatetime:o}</requested_datetime>
-    <service_name>{sut.ServiceName}</service_name>
     <service_code>{sut.ServiceCode}</service_code>
-    <service_request_id>{sut.ServiceRequestId}</service_request_id>
-    <status>{sut.Status}</status>
-    <status_notes>{sut.StatusNotes}</status_notes>
+    <service_name>{sut.ServiceName}</service_name>
     <service_notice>{sut.ServiceNotice}</service_notice>
+    <service_request_id>{sut.ServiceRequestId}</service_request_id>
+    <status>{snakeCase.GetPropertyName(sut.Status.ToString(), false)}</status>
+    <status_notes>{sut.StatusNotes}</status_notes>
     <updated_datetime>{sut.UpdatedDatetime:o}</updated_datetime>
     <zipcode>{sut.Zipcode}</zipcode>
   </request>
