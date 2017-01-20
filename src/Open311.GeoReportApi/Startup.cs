@@ -53,7 +53,7 @@
                 {
                     Description = "Test service",
                     Group = "Envir",
-                    Keywords = "asd,asd",
+                    Keywords = new List<string> { "asd,asd"},
                     ServiceCode = "ENV-TO",
                     ServiceName = "Environnement",
                     Type = ServiceType.Realtime,

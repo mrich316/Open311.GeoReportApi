@@ -31,7 +31,7 @@
             var expected = $@"<service xmlns:i=""http://www.w3.org/2001/XMLSchema-instance"">
   <description>{sut.Description}</description>
   <group>{sut.Group}</group>
-  <keywords>{sut.Keywords}</keywords>
+  <keywords>{string.Join(",", sut.Keywords)}</keywords>
   <metadata>{sut.Metadata.ToString().ToLowerInvariant()}</metadata>
   <service_code>{sut.ServiceCode}</service_code>
   <service_name>{sut.ServiceName}</service_name>
@@ -50,7 +50,7 @@
   <service>
     <description>{sut.Description}</description>
     <group>{sut.Group}</group>
-    <keywords>{sut.Keywords}</keywords>
+    <keywords>{string.Join(",", sut.Keywords)}</keywords>
     <metadata>{sut.Metadata.ToString().ToLowerInvariant()}</metadata>
     <service_code>{sut.ServiceCode}</service_code>
     <service_name>{sut.ServiceName}</service_name>

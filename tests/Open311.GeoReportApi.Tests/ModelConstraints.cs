@@ -107,7 +107,8 @@
                     // exceptions
                     if (prop.Name == nameof(ServiceRequest.ExpectedDatetimeString)
                         || prop.Name == nameof(ServiceRequest.RequestedDatetimeString)
-                        || prop.Name == nameof(ServiceRequest.UpdatedDatetimeString))
+                        || prop.Name == nameof(ServiceRequest.UpdatedDatetimeString)
+                        || prop.Name == nameof(Service.KeywordStrings))
                     {
                         propName = prop.Name.Replace("String", string.Empty);
                     }

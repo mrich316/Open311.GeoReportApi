@@ -1,8 +1,8 @@
 ﻿namespace Open311.GeoReportApi.Models
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
-    using Newtonsoft.Json;
 
     [DataContract(Name = Open311Constants.ModelProperties.Service, Namespace = Open311Constants.DefaultNamespace)]
     public class Service
@@ -10,6 +10,7 @@
         public Service()
         {
             Attributes = new ServiceAttributes();
+            Keywords = new List<string>();
         }
 
         /// <summary>
@@ -50,8 +51,11 @@
         /// A comma separated list of tags or keywords to help users identify the request type.
         /// This can provide synonyms of the service_name and group.
         /// </summary>
+        [IgnoreDataMember]
+        public List<string> Keywords { get; set; }
+
         [DataMember(Name = Open311Constants.ModelProperties.Keywords)]
-        public string Keywords { get; set; }
+        internal string KeywordStrings => string.Join(",", Keywords);
 
         /// <summary>
         /// A category to group this service type within. This provides a way to group
@@ -61,7 +65,6 @@
         public string Group { get; set; }
 
         [IgnoreDataMember]
-        [JsonIgnore]
         public ServiceAttributes Attributes { get; set; }
     }
 }

@@ -3,7 +3,6 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Runtime.Serialization;
-    using Newtonsoft.Json;
 
     [DataContract(Name = Open311Constants.ModelProperties.ServiceRequest, Namespace = Open311Constants.DefaultNamespace)]
     public class ServiceRequest
@@ -73,7 +72,6 @@
         /// The date and time when the service request was made.
         /// </summary>
         [IgnoreDataMember]
-        [JsonIgnore]
         public DateTimeOffset RequestedDatetime { get; set; }
 
         [DataMember(Name = Open311Constants.ModelProperties.RequestedDatetime)]
@@ -84,7 +82,6 @@
         /// For requests with status=closed, this will be the date the request was closed.
         /// </summary>
         [IgnoreDataMember]
-        [JsonIgnore]
         public DateTimeOffset? UpdatedDatetime { get; set; }
 
         [DataMember(Name = Open311Constants.ModelProperties.UpdatedDatetime)]
@@ -96,7 +93,6 @@
         /// May not be returned.
         /// </summary>
         [IgnoreDataMember]
-        [JsonIgnore]
         public DateTimeOffset? ExpectedDatetime { get; set; }
 
         [DataMember(Name = Open311Constants.ModelProperties.ExpectedDatetime)]

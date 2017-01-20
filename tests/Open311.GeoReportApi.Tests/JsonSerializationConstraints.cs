@@ -43,7 +43,7 @@
   ""description"": ""{sut.Description}"",
   ""metadata"": {snakeCase.GetPropertyName(sut.Metadata.ToString(), false)},
   ""type"": ""{snakeCase.GetPropertyName(sut.Type.ToString(), false)}"",
-  ""keywords"": ""{sut.Keywords}"",
+  ""keywords"": ""{string.Join(",", sut.Keywords)}"",
   ""group"": ""{sut.Group}""
 }}";
             var actual = JsonConvert.SerializeObject(sut, serializerSettings);
@@ -61,7 +61,7 @@
     ""description"": ""{sut.Description}"",
     ""metadata"": {snakeCase.GetPropertyName(sut.Metadata.ToString(), false)},
     ""type"": ""{snakeCase.GetPropertyName(sut.Type.ToString(), false)}"",
-    ""keywords"": ""{sut.Keywords}"",
+    ""keywords"": ""{string.Join(",", sut.Keywords)}"",
     ""group"": ""{sut.Group}""
   }}
 ]";

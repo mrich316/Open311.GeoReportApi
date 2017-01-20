@@ -1,6 +1,5 @@
 ﻿namespace Open311.GeoReportApi.Models
 {
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Runtime.Serialization;
 
