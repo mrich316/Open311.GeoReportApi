@@ -22,6 +22,7 @@
             public const string Description = "description";
             public const string DeviceId = "device_id";
             public const string Email = "email";
+            public const string EndDate = "end_date";
             public const string Error = "error";
             public const string Errors = "errors";
             public const string ExpectedDatetime = "expected_datetime";
@@ -57,6 +58,8 @@
             public const string ServiceRequestStatus = "status";
             public const string ServiceType = "type";
             public const string Services = "services";
+            public const string StartDate = "start_date";
+            public const string Status = "status";
             public const string StatusNotes = "status_notes";
             public const string Token = "token";
             public const string Type = "type";

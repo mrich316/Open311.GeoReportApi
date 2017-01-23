@@ -1,6 +1,7 @@
 ﻿namespace Open311.GeoReportApi.Controllers
 {
     using System;
+    using System.Net;
     using System.Threading.Tasks;
     using InputModels;
     using Microsoft.AspNetCore.Mvc;
@@ -23,11 +24,7 @@
         public IActionResult GetServiceRequestId(GetServiceRequestIdInputModel model)
         {
             // TODO: Implement GetServiceRequestId.
-            return Ok(new ServiceRequests<ServiceRequestToken>(new ServiceRequestToken
-            {
-                ServiceRequestId = new Random().Next().ToString(),
-                Token = new Random().Next().ToString()
-            }));
+            return new StatusCodeResult((int) HttpStatusCode.NotImplemented);
         }
     }
 }

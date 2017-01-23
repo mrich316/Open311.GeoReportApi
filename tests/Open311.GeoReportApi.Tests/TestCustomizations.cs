@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Runtime.Serialization;
     using System.Threading.Tasks;
     using GeoReportApi.Controllers;
     using GeoReportApi.InputModels;
@@ -10,7 +9,6 @@
     using Models;
     using Moq;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
     using Ploeh.AutoFixture;
     using Services;

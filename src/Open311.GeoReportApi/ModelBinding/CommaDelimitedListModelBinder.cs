@@ -2,49 +2,64 @@
 {
     using System;
     using System.Collections;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Reflection;
+    using System.Runtime.ExceptionServices;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public class CommaDelimitedListModelBinder : IModelBinder
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
-            if (!bindingContext.ModelType.IsGenericType
-                || typeof(List<>) != bindingContext.ModelType.GetGenericTypeDefinition())
+            var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
+            if (valueProviderResult == ValueProviderResult.None)
             {
-                return Task.CompletedTask;
+                return TaskCache.CompletedTask;
             }
 
-            var elementType = bindingContext.ModelType.GetTypeInfo().GenericTypeArguments[0];
-            var list = (IList)Activator.CreateInstance(bindingContext.ModelType);
+            var modelTypeInfo = bindingContext.ModelType.GetTypeInfo();
 
-            var key = bindingContext.ModelName;
-            var value = bindingContext.ValueProvider.GetValue(key).ToString();
-
-            if (!string.IsNullOrWhiteSpace(value))
+            try
             {
-                var converter = TypeDescriptor.GetConverter(elementType);
+                var list = (IList) Activator.CreateInstance(bindingContext.ModelType);
+                var value = valueProviderResult.FirstValue;
 
-                foreach (var elm in value.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries))
+                if (!string.IsNullOrWhiteSpace(value))
                 {
-                    try
+                    var elementType = modelTypeInfo.GenericTypeArguments[0];
+                    var converter = TypeDescriptor.GetConverter(elementType);
+
+                    foreach (var elm in value.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries))
                     {
-                        list.Add(converter.ConvertFromString(elm.Trim()));
-                    }
-                    catch
-                    {
-                        // TODO: What should we do when an element is invalid ?
-                        // This implementation simply removes invalid elements.
+                        list.Add(converter.ConvertFromString(null, valueProviderResult.Culture, elm.Trim()));
                     }
                 }
+
+                bindingContext.ModelState.SetModelValue(bindingContext.ModelName, valueProviderResult);
+                bindingContext.Result = ModelBindingResult.Success(list);
+
+            }
+            catch (Exception exception)
+            {
+                // adapted from https://github.com/aspnet/Mvc/blob/dev/src/Microsoft.AspNetCore.Mvc.Core/ModelBinding/Binders/SimpleTypeModelBinder.cs
+
+                var isFormatException = exception is FormatException;
+                if (!isFormatException && exception.InnerException != null)
+                {
+                    // TypeConverter throws System.Exception wrapping the FormatException,
+                    // so we capture the inner exception.
+                    exception = ExceptionDispatchInfo.Capture(exception.InnerException).SourceException;
+                }
+
+                bindingContext.ModelState.TryAddModelError(
+                    bindingContext.ModelName,
+                    exception,
+                    bindingContext.ModelMetadata);
             }
 
-            bindingContext.Result = ModelBindingResult.Success(list);
-
-            return Task.CompletedTask;
+            return TaskCache.CompletedTask;
         }
     }
 }

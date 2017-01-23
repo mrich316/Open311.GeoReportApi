@@ -3,6 +3,7 @@
     using System;
     using System.Globalization;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Newtonsoft.Json.Serialization;
 
@@ -36,7 +37,7 @@
                 return AddValueProviderAsync(context);
             }
 
-            return Task.CompletedTask;
+            return TaskCache.CompletedTask;
         }
 
         private async Task AddValueProviderAsync(ValueProviderFactoryContext context)
