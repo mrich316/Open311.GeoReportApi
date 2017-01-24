@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
 
     public class PostServiceRequestInputModel : BaseInputModel, IValidatableObject
     {
@@ -32,6 +31,8 @@
         /// <see cref="Lat"/> and <see cref="Long"/> both need to be sent even though they are sent as two separate parameters.
         /// <see cref="Lat"/> and <see cref="Long"/> are required if no <see cref="AddressString"/> or <see cref="AddressId"/> is provided.
         /// </remarks>
+        [Range(-90, 90)]
+        [Display(Name = Open311Constants.ModelProperties.Lat)]
         public double? Lat { get; set; }
 
         /// <summary>
@@ -41,6 +42,8 @@
         /// <see cref="Lat"/> and <see cref="Long"/> both need to be sent even though they are sent as two separate parameters.
         /// <see cref="Lat"/> and <see cref="Long"/> are required if no <see cref="AddressString"/> or <see cref="AddressId"/> is provided.
         /// </remarks>
+        [Range(-180, 180)]
+        [Display(Name = Open311Constants.ModelProperties.Long)]
         public double? Long { get; set; }
 
         /// <summary>
@@ -123,10 +126,20 @@
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            // TODO: A full location parameter must be submitted.
-            // TODO: One of lat & long or address_string or address_id.
+            if (Lat.HasValue && !Long.HasValue
+                || !Lat.HasValue && Long.HasValue)
+            {
+                yield return new ValidationResult(
+                    "Missing latitude or longitude. Ensure both (or none) are provided.");
+            }
 
-            return Enumerable.Empty<ValidationResult>();
+            if (!Lat.HasValue && !Long.HasValue
+                && AddressId == null && AddressString == null)
+            {
+                yield return
+                    new ValidationResult(
+                        "Missing location parameters. Ensure at least one location parameter is defined (address string, address id or latitude/longitude).");
+            }
         }
     }
 }
