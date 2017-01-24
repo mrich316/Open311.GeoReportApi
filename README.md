@@ -1,11 +1,19 @@
 # Open311 GeoReport v2 API
 
-## Work in progress, not usable [yet].
-
 See the [official documentation](http://wiki.open311.org/GeoReport_v2/) for more information.
 
 This project aims to create a [ASP.NET Core](https://docs.microsoft.com/en-ca/aspnet/core/)
 framework to ease implementation of the `GeoReport v2` api from [Open311](http://www.open311.org/).
+
+## For early adopters only.
+
+As of today, this project is an aspnet web api.  To use as-is, you can
+implement interfaces in the namespace `Open311Open311.GeoReportApi.Services`
+and replace the in-memory implementations in `Startup.cs`.
+
+We know this is sub-optimal and we will try to create a reusable (and documented)
+owin middleware distributed by nuget.org. This should simplify distribution
+and adoption by the community.
 
 ## Implementation Status
 
@@ -55,11 +63,6 @@ what the api should accept or not.  From the official docs:
 > page at the Twitpic URL for the image given the conventions of Twitpic.com.
 > This could also be a URL to a media RSS feed where the clients can parse for media
 > in a more structured way.
-
-## Future developments
-
-We will try to create a reusable (and documented) library that can be embedded in any OWIN application.
-This should simplify distribution and adoption by the community.
 
 ## Contributing
 
