@@ -57,8 +57,20 @@
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            // TODO: EndDate - StartDate must be lower than or equal to 90 days.
-            return Enumerable.Empty<ValidationResult>();
+            if (EndDate.HasValue)
+            {
+                if (!StartDate.HasValue)
+                {
+                    yield return new ValidationResult(
+                        "A start date must be specified if an end date was provided.");
+
+                }
+                else if (StartDate > EndDate)
+                {
+                    yield return new ValidationResult(
+                        "The start date must be lower or equal the end date.");
+                }
+            }
         }
     }
 }
