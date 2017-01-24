@@ -26,6 +26,7 @@ compliants as of today, we are still in development.
 | API Method               | Implementation Status | Compliance |
 |--------------------------|-----------------------|------------|
 | Service Discovery        | planned               |            |
+| API Keys                 | planned               |            |
 | `GET Service List`       | implemented           | xml/json   |
 | `GET Service Definition` | implemented           | xml/json   |
 | `POST Service Request`   | implemented           | xml/json   |
@@ -40,8 +41,8 @@ solution without any development efforts.
 
 ## Known Problems and Limitations
 
-Model bindings are not fully functional. For example: submitting a request with attributes is not working
-as expected. Also, we are missing a lot of unit tests in model logics and value providers.
+API Keys required to normally submit a new service request are not currently used.
+Also, we are missing a lot of unit tests in model logics and value providers.
 Work is being planned to address these issues.
 
 The current xml signature includes the default namespace (`xmlns:i="http://www.w3.org/2001/XMLSchema-instance"`).
