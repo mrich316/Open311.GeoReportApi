@@ -1,10 +1,12 @@
 ﻿namespace Open311.GeoReportApi.ModelBinding
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.Extensions.Primitives;
     using Newtonsoft.Json.Serialization;
 
     public class NamingStrategyFormValueProvider : FormValueProvider
@@ -26,36 +28,61 @@
             _culture = culture;
         }
 
+        public override bool ContainsPrefix(string prefix)
+        {
+            var snakeCasePrefix = _namingStrategy.GetPropertyName(prefix, false);
+
+            return base.ContainsPrefix(snakeCasePrefix);
+        }
+
+        public override IDictionary<string, string> GetKeysFromPrefix(string prefix)
+        {
+            var snakeCasePrefix = _namingStrategy.GetPropertyName(prefix, false);
+
+            return base.GetKeysFromPrefix(snakeCasePrefix);
+        }
+
         public override ValueProviderResult GetValue(string key)
         {
             if (key == null) throw new ArgumentNullException(nameof(key));
 
-            key = string.Join(".", key.Split('.')
-                .Select(k => _namingStrategy.GetPropertyName(k, false)));
+            key = GetSnakeCaseKey(key);
 
-            ValueProviderResult result;
+            var result = base.GetValue(key);
 
-            // TODO: What should happen if values are provided with and without php style arrays ?
-            // Example: If we received: attribute[code][]=1&attribute[code]=2
-            // Should we return attribute=1,2 ? In this implementation we only
-            // return attribute=2.
+            // georeport api supports php style arrays.
+            // check if present and append them.
+            var phpKey = key + "[]";
 
-            var values = _values[key];
-            if (values.Count == 0)
+            // we use FormCollection directly because base.GetValue() uses
+            // PrefixContainer and strips empty arrays in prefixes:
+            // ex: attribute[code][] is seen as attribute[code].
+            if (_values.ContainsKey(phpKey))
             {
-                // georeport api supports php style arrays. check if present.
-                values = _values[key + "[]"];
+                var phpValues = _values[phpKey];
 
-                result = values.Count == 0
-                    ? ValueProviderResult.None
-                    : new ValueProviderResult(values, _culture);
-            }
-            else
-            {
-                result = new ValueProviderResult(values, _culture);
+                if (phpValues.Count > 0)
+                {
+                    var values = result.Values.Concat(phpValues);
+
+                    result = new ValueProviderResult(new StringValues(values.ToArray()), _culture);
+                }
             }
 
             return result;
+        }
+
+        protected string GetSnakeCaseKey(string key)
+        {
+            var keyParts = key.Split('.');
+            var last = keyParts.Last();
+
+            if (!last.Contains('['))
+            {
+                keyParts[keyParts.Length - 1] = _namingStrategy.GetPropertyName(last, false);
+            }
+
+            return string.Join(".", keyParts);
         }
     }
 }
