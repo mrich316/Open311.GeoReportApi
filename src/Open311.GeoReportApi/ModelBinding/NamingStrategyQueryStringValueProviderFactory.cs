@@ -3,6 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using System.Globalization;
+    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Newtonsoft.Json.Serialization;
 
@@ -28,7 +29,7 @@
 
             context.ValueProviders.Add(valueProvider);
 
-            return Task.CompletedTask;
+            return TaskCache.CompletedTask;
         }
     }
 }

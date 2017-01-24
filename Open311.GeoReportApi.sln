@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Open311.GeoReportApi", "src\Open311.GeoReportApi\Open311.GeoReportApi.xproj", "{3750C804-4B8D-4E42-A065-B6E217941AD1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{246692E5-99BC-460C-8FAA-9B533122225E}"
+EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Open311.GeoReportApi.Tests", "tests\Open311.GeoReportApi.Tests\Open311.GeoReportApi.Tests.xproj", "{53DB88C3-6B0E-454F-BB0A-8C9C7D8BAAC0}"
 EndProject
 Global
@@ -35,5 +37,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3750C804-4B8D-4E42-A065-B6E217941AD1} = {1C151D61-31F1-49FB-A1B5-BA96C463A393}
+		{53DB88C3-6B0E-454F-BB0A-8C9C7D8BAAC0} = {246692E5-99BC-460C-8FAA-9B533122225E}
 	EndGlobalSection
 EndGlobal
