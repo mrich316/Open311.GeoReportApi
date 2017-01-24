@@ -36,7 +36,7 @@
             return result;
         }
 
-        [HttpGet("services/{service_code}.{format}")]
+        [HttpGet("services/{serviceCode}.{format}")]
         public async Task<IActionResult> GetServiceDefinition(GetServiceDefinitionInputModel model, CancellationToken cancellationToken)
         {
             var store = await _jurisdiction.GetServiceStore(model);
