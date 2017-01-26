@@ -3,50 +3,22 @@
   "version": "0.0.1",
   "language": "en-US",
   "dependencies": {
-    "Microsoft.AspNetCore.Diagnostics": "1.1.0",
-    "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",
-    "Microsoft.AspNetCore.Server.Kestrel": "1.1.0",
     "Microsoft.AspNetCore.Mvc": "1.1.0",
-    "Microsoft.AspNetCore.Mvc.Formatters.Xml": "1.1.0",
-    "Microsoft.Extensions.Logging.Console": "1.1.0"
-  },
-
-  "tools": {
-    "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.1.0-preview4-final",
-    "Microsoft.DotNet.Watcher.Tools": "1.1.0-preview4-final"
+    "Microsoft.AspNetCore.Mvc.Formatters.Xml": "1.1.0"
   },
 
   "frameworks": {
-    "netcoreapp1.1": {
-      "dependencies": {
-        "Microsoft.NETCore.App": {
-          "type": "platform",
-          "version": "1.1.0"
-        }
+    "netstandard1.6": {
+      "buildOptions": {
+        "define": [
+          "NETSTANDARD"
+        ]
       }
     },
     "net451": {}
   },
 
   "buildOptions": {
-    "emitEntryPoint": true,
     "preserveCompilationContext": true
-  },
-
-  "runtimeOptions": {
-    "configProperties": {
-      "System.GC.Server": true
-    }
-  },
-
-  "publishOptions": {
-    "include": [
-      "wwwroot",
-      "web.config"
-    ]
-  },
-
-  "scripts": {
-    "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   }
 }

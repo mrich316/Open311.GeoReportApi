@@ -267,7 +267,7 @@
 
         private async Task<string> Serialize<T>(T value)
         {
-            var serializer = new Startup().CreateXmlSerializerOutputFormatter();
+            var serializer = Open311Options.CreateXmlSerializerOutputFormatter();
 
             // override Startup to simplify testing.
             serializer.WriterSettings.Indent = true;

@@ -6,8 +6,8 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>92530c11-8c74-4d9b-a005-2784adee78f7</ProjectGuid>
-    <RootNamespace>Open311.GeoReportApi.Tests</RootNamespace>
+    <ProjectGuid>acf75e00-bb2f-4f12-80a8-85ab45f6be2c</ProjectGuid>
+    <RootNamespace>Host</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
   </PropertyGroup>

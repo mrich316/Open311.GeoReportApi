@@ -58,7 +58,7 @@
                 .FromFactory(() =>
                 {
                     var jsonOptions = new MvcJsonOptions();
-                    new Startup().SetupJsonOptions(jsonOptions);
+                    Open311Options.SetupJsonOptions(jsonOptions);
 
                     return jsonOptions.SerializerSettings;
                 })
@@ -69,7 +69,7 @@
                 .FromFactory(() =>
                 {
                     var jsonOptions = new MvcJsonOptions();
-                    new Startup().SetupJsonOptions(jsonOptions);
+                    Open311Options.SetupJsonOptions(jsonOptions);
 
                     var contractResolver = (DefaultContractResolver) jsonOptions.SerializerSettings.ContractResolver;
 

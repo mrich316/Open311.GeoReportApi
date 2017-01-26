@@ -1,4 +1,4 @@
-﻿namespace Open311.GeoReportApi
+﻿namespace Host
 {
     using System.IO;
     using Microsoft.AspNetCore.Hosting;
