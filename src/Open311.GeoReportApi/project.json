@@ -11,7 +11,7 @@
     "netstandard1.6": {
       "buildOptions": {
         "define": [
-          "NETSTANDARD"
+          "NETSTANDARD_DOES_NOT_SERIALIZE_READ_ONLY_TYPES_BUG"
         ]
       }
     },

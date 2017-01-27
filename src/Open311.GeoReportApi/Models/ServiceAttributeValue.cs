@@ -3,19 +3,33 @@
     using System;
     using System.Runtime.Serialization;
 
-    [DataContract(Name = Open311Constants.ModelProperties.ServiceAttributeValue, Namespace = Open311Constants.DefaultNamespace)]
+    [DataContract(Name = Open311Constants.ModelProperties.ServiceAttributeValue,
+        Namespace = Open311Constants.DefaultNamespace)]
     public struct ServiceAttributeValue : IEquatable<ServiceAttributeValue>
     {
+        private readonly string _key;
+
         public ServiceAttributeValue(string key, string value = null)
         {
             if (key == null) throw new ArgumentNullException(nameof(key));
 
-            Key = key;
+            _key = key;
             Name = value;
         }
 
         [DataMember(Name = Open311Constants.ModelProperties.Key)]
-        public string Key { get; }
+        public string Key
+        {
+            get { return _key; }
+
+#if NETSTANDARD_DOES_NOT_SERIALIZE_READ_ONLY_TYPES_BUG
+            internal set
+            {
+                throw new NotSupportedException(
+                    "Enabled only because DataContractSerializer does not honor SerializeReadOnlyTypes in netstandard, see https://github.com/mrich316/Open311.GeoReportApi/issues/1");
+            }
+#endif
+        }
 
         [DataMember(Name = Open311Constants.ModelProperties.Name)]
         public string Name { get; set; }
@@ -32,8 +46,8 @@
         {
             if (ReferenceEquals(null, obj)) return false;
 
-            return obj.GetType() == GetType() 
-                && Equals((ServiceAttributeValue) obj);
+            return obj.GetType() == GetType()
+                   && Equals((ServiceAttributeValue) obj);
         }
 
         public bool Equals(ServiceAttributeValue other)

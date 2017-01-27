@@ -15,7 +15,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Open311.GeoReportApi", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{246692E5-99BC-460C-8FAA-9B533122225E}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Open311.GeoReportApi.Tests", "tests\Open311.GeoReportApi.Tests\Open311.GeoReportApi.Tests.xproj", "{92530C11-8C74-4D9B-A005-2784ADEE78F7}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Open311.GeoReportApi.Tests", "test\Open311.GeoReportApi.Tests\Open311.GeoReportApi.Tests.xproj", "{92530C11-8C74-4D9B-A005-2784ADEE78F7}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Host", "src\Host\Host.xproj", "{ACF75E00-BB2F-4F12-80A8-85AB45F6BE2C}"
 EndProject

@@ -75,7 +75,18 @@
         public DateTimeOffset RequestedDatetime { get; set; }
 
         [DataMember(Name = Open311Constants.ModelProperties.RequestedDatetime)]
-        internal string RequestedDatetimeString => RequestedDatetime.ToString("o");
+        internal string RequestedDatetimeString
+        {
+            get { return RequestedDatetime.ToString("o"); }
+
+#if NETSTANDARD_DOES_NOT_SERIALIZE_READ_ONLY_TYPES_BUG
+            set
+            {
+                throw new NotSupportedException(
+                    "Enabled only because DataContractSerializer does not honor SerializeReadOnlyTypes in netstandard, see https://github.com/mrich316/Open311.GeoReportApi/issues/1");
+            }
+#endif
+        }
 
         /// <summary>
         /// The date and time when the service request was last modified.
@@ -85,7 +96,18 @@
         public DateTimeOffset? UpdatedDatetime { get; set; }
 
         [DataMember(Name = Open311Constants.ModelProperties.UpdatedDatetime)]
-        internal string UpdatedDatetimeString => UpdatedDatetime?.ToString("o");
+        internal string UpdatedDatetimeString
+        {
+            get { return UpdatedDatetime?.ToString("o"); }
+
+#if NETSTANDARD_DOES_NOT_SERIALIZE_READ_ONLY_TYPES_BUG
+            set
+            {
+                throw new NotSupportedException(
+                    "Enabled only because DataContractSerializer does not honor SerializeReadOnlyTypes in netstandard, see https://github.com/mrich316/Open311.GeoReportApi/issues/1");
+            }
+#endif
+        }
 
         /// <summary>
         /// The date and time when the service request can be expected to be fulfilled.
@@ -96,7 +118,18 @@
         public DateTimeOffset? ExpectedDatetime { get; set; }
 
         [DataMember(Name = Open311Constants.ModelProperties.ExpectedDatetime)]
-        internal string ExpectedDatetimeString => ExpectedDatetime?.ToString("o");
+        internal string ExpectedDatetimeString
+        {
+            get { return ExpectedDatetime?.ToString("o"); }
+
+#if NETSTANDARD_DOES_NOT_SERIALIZE_READ_ONLY_TYPES_BUG
+            set
+            {
+                throw new NotSupportedException(
+                    "Enabled only because DataContractSerializer does not honor SerializeReadOnlyTypes in netstandard, see https://github.com/mrich316/Open311.GeoReportApi/issues/1");
+            }
+#endif
+        }
 
         /// <summary>
         /// Human readable address or description of location.

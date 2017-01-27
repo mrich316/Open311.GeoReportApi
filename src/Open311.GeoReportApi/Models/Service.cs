@@ -1,5 +1,6 @@
 ﻿namespace Open311.GeoReportApi.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
@@ -39,7 +40,18 @@
         /// Definition method is not needed.
         /// </summary>
         [DataMember(Name = Open311Constants.ModelProperties.Metadata)]
-        public bool Metadata => Attributes.Any();
+        public bool Metadata
+        {
+            get { return Attributes.Any(); }
+
+#if NETSTANDARD_DOES_NOT_SERIALIZE_READ_ONLY_TYPES_BUG
+            internal set
+            {
+                throw new NotSupportedException(
+                    "Enabled only because DataContractSerializer does not honor SerializeReadOnlyTypes in netstandard, see https://github.com/mrich316/Open311.GeoReportApi/issues/1");
+            }
+#endif
+        }
 
         /// <summary>
         /// Service type.
@@ -55,7 +67,18 @@
         public List<string> Keywords { get; set; }
 
         [DataMember(Name = Open311Constants.ModelProperties.Keywords)]
-        internal string KeywordStrings => string.Join(",", Keywords);
+        internal string KeywordStrings
+        {
+            get { return string.Join(",", Keywords); }
+
+#if NETSTANDARD_DOES_NOT_SERIALIZE_READ_ONLY_TYPES_BUG
+            set
+            {
+                throw new NotSupportedException(
+                    "Enabled only because DataContractSerializer does not honor SerializeReadOnlyTypes in netstandard, see https://github.com/mrich316/Open311.GeoReportApi/issues/1");
+            }
+#endif
+        }
 
         /// <summary>
         /// A category to group this service type within. This provides a way to group
