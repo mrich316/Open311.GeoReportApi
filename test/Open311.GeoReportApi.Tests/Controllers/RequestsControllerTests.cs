@@ -17,10 +17,21 @@
 
     public class RequestsControllerTests
     {
-        [Fact]
-        public void Ctor_ThrowsOnArgumentNull()
+        public class Ctor
         {
-            Assert.Throws<ArgumentNullException>("jurisdiction", () => new ServicesController(null));
+            [Theory, TestConventions]
+            public void ThrowsOnNullJurisdiction(IServiceAttributeValidator attributeValidator)
+            {
+                Assert.Throws<ArgumentNullException>("jurisdiction",
+                    () => new RequestsController(null, attributeValidator));
+            }
+
+            [Theory, TestConventions]
+            public void ThrowsOnNullAttributeValidator(IJurisdictionService jurisdiction)
+            {
+                Assert.Throws<ArgumentNullException>("attributeValidator",
+                    () => new RequestsController(jurisdiction, null));
+            }
         }
 
         public class GetServiceRequest

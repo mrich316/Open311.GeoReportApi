@@ -21,19 +21,20 @@
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            if (context.Result != null) return;
-
-            foreach (var model in context.ActionArguments.Values.OfType<BaseInputModel>())
+            if (context.Result == null)
             {
-                if (!await _serviceStoreFactory.Exists(model.JurisdictionId))
+                foreach (var model in context.ActionArguments.Values.OfType<BaseInputModel>())
                 {
-                    context.Result = new NotFoundObjectResult(new Errors(new Error
+                    if (!await _serviceStoreFactory.Exists(model.JurisdictionId))
                     {
-                        Code = 404,
-                        Description = $"{Open311Constants.ModelProperties.JurisdictionId} provided was not found."
-                    }));
+                        context.Result = new NotFoundObjectResult(new Errors(new Error
+                        {
+                            Code = 404,
+                            Description = $"{Open311Constants.ModelProperties.JurisdictionId} provided was not found."
+                        }));
 
-                    break;
+                        break;
+                    }
                 }
             }
 
