@@ -14,6 +14,10 @@
             // Defaults to last 90 days.
             EndDate = DateTimeOffset.UtcNow;
             StartDate = EndDate - TimeSpan.FromDays(90);
+
+            ServiceRequestId = new List<string>();
+            ServiceCode = new List<string>();
+            Status = new List<ServiceRequestStatus>();
         }
 
         /// <summary>
