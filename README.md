@@ -65,7 +65,3 @@ what the api should accept or not.  From the official docs:
 > page at the Twitpic URL for the image given the conventions of Twitpic.com.
 > This could also be a URL to a media RSS feed where the clients can parse for media
 > in a more structured way.
-
-## Contributing
-
-We do not accept contributions for now. Once the code stabilizes, we'll revisit this decision.
