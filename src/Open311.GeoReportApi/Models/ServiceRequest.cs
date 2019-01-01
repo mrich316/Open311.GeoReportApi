@@ -79,7 +79,7 @@
         {
             get { return RequestedDatetime.ToString("o"); }
 
-#if NETSTANDARD_DOES_NOT_SERIALIZE_READ_ONLY_TYPES_BUG
+#if NETSTANDARD
             set
             {
                 throw new NotSupportedException(
@@ -100,7 +100,7 @@
         {
             get { return UpdatedDatetime?.ToString("o"); }
 
-#if NETSTANDARD_DOES_NOT_SERIALIZE_READ_ONLY_TYPES_BUG
+#if NETSTANDARD
             set
             {
                 throw new NotSupportedException(
@@ -122,7 +122,7 @@
         {
             get { return ExpectedDatetime?.ToString("o"); }
 
-#if NETSTANDARD_DOES_NOT_SERIALIZE_READ_ONLY_TYPES_BUG
+#if NETSTANDARD
             set
             {
                 throw new NotSupportedException(

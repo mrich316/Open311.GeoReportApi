@@ -22,7 +22,7 @@
 
             var actual = await Serialize(sut);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -40,7 +40,7 @@
 
             var actual = await Serialize(sut);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -60,7 +60,7 @@
 
             var actual = await Serialize(new Services(sut));
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -73,7 +73,7 @@
 
             var actual = await Serialize(sut);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -101,7 +101,7 @@
 
             var actual = await Serialize(sut);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -138,7 +138,7 @@
 
             var actual = await Serialize(sut);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -153,7 +153,7 @@
 
             var actual = await Serialize(sut);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -170,7 +170,7 @@
 
             var actual = await Serialize(new ServiceRequests<ServiceRequestCreated>(sut));
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -183,7 +183,7 @@
 
             var actual = await Serialize(sut);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -198,7 +198,7 @@
 
             var actual = await Serialize(new ServiceRequests<ServiceRequestToken>(sut));
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -229,7 +229,7 @@
 
             var actual = await Serialize(sut);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -262,7 +262,7 @@
 
             var actual = await Serialize(new ServiceRequests<ServiceRequest>(sut));
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         private async Task<string> Serialize<T>(T value)

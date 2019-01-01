@@ -1,23 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1C151D61-31F1-49FB-A1B5-BA96C463A393}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0C16DCEA-26BA-44ED-89A6-5E4876619F13}"
 	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Open311.GeoReportApi", "src\Open311.GeoReportApi\Open311.GeoReportApi.xproj", "{3750C804-4B8D-4E42-A065-B6E217941AD1}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{246692E5-99BC-460C-8FAA-9B533122225E}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Open311.GeoReportApi.Tests", "test\Open311.GeoReportApi.Tests\Open311.GeoReportApi.Tests.xproj", "{92530C11-8C74-4D9B-A005-2784ADEE78F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Open311.GeoReportApi", "src\Open311.GeoReportApi\Open311.GeoReportApi.csproj", "{3750C804-4B8D-4E42-A065-B6E217941AD1}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Host", "src\Host\Host.xproj", "{ACF75E00-BB2F-4F12-80A8-85AB45F6BE2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Open311.GeoReportApi.Tests", "test\Open311.GeoReportApi.Tests\Open311.GeoReportApi.Tests.csproj", "{92530C11-8C74-4D9B-A005-2784ADEE78F7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host", "src\Host\Host.csproj", "{ACF75E00-BB2F-4F12-80A8-85AB45F6BE2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,5 +44,8 @@ Global
 		{3750C804-4B8D-4E42-A065-B6E217941AD1} = {1C151D61-31F1-49FB-A1B5-BA96C463A393}
 		{92530C11-8C74-4D9B-A005-2784ADEE78F7} = {246692E5-99BC-460C-8FAA-9B533122225E}
 		{ACF75E00-BB2F-4F12-80A8-85AB45F6BE2C} = {1C151D61-31F1-49FB-A1B5-BA96C463A393}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B9C5D528-13CF-4B21-9C44-EC58A3396E79}
 	EndGlobalSection
 EndGlobal

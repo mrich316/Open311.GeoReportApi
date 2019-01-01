@@ -1,4 +1,6 @@
-﻿namespace Open311.GeoReportApi.Tests.Controllers
+﻿using AutoFixture.Xunit2;
+
+namespace Open311.GeoReportApi.Tests.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +12,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using Moq;
-    using Ploeh.AutoFixture.Xunit2;
     using Services;
     using Xunit;
 

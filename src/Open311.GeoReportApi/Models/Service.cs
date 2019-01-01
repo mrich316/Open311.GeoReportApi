@@ -44,7 +44,7 @@
         {
             get { return Attributes.Any(); }
 
-#if NETSTANDARD_DOES_NOT_SERIALIZE_READ_ONLY_TYPES_BUG
+#if NETSTANDARD
             internal set
             {
                 throw new NotSupportedException(
@@ -71,7 +71,7 @@
         {
             get { return string.Join(",", Keywords); }
 
-#if NETSTANDARD_DOES_NOT_SERIALIZE_READ_ONLY_TYPES_BUG
+#if NETSTANDARD
             set
             {
                 throw new NotSupportedException(

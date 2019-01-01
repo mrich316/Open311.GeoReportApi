@@ -45,7 +45,7 @@
 
         public class ContainsPrefix
         {
-            [Fact, TestConventions]
+            [Fact]
             public void OnAttributeReturnsTrue()
             {
                 var sut = GetProvider();
@@ -53,7 +53,7 @@
                 Assert.True(sut.ContainsPrefix("Attribute"));
             }
 
-            [Fact, TestConventions]
+            [Fact]
             public void OnSnakeCaseReturnsTrue()
             {
                 var sut = GetProvider();
@@ -64,7 +64,7 @@
 
         public class GetKeysFromPrefix
         {
-            [Fact, TestConventions]
+            [Fact]
             public void OnAttributeReturns()
             {
                 var sut = GetProvider();
@@ -81,7 +81,7 @@
                 Assert.Equal(expected, actual);
             }
 
-            [Fact, TestConventions]
+            [Fact]
             public void OnSnakeCaseReturns()
             {
                 var sut = GetProvider();
@@ -94,7 +94,7 @@
 
         public class GetValue
         {
-            [Fact, TestConventions]
+            [Fact]
             public void AttributeKeysShouldNotBeSnakeCased()
             {
                 var sut = GetProvider();
@@ -105,7 +105,7 @@
                 Assert.Equal(expected, actual);
             }
 
-            [Fact, TestConventions]
+            [Fact]
             public void AttributeKeysShouldBeCombinedWithPhpStyledArrays()
             {
                 var sut = GetProvider();

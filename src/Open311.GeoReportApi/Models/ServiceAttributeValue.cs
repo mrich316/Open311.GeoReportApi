@@ -11,9 +11,7 @@
 
         public ServiceAttributeValue(string key, string value = null)
         {
-            if (key == null) throw new ArgumentNullException(nameof(key));
-
-            _key = key;
+            _key = key ?? throw new ArgumentNullException(nameof(key));
             Name = value;
         }
 
@@ -22,7 +20,7 @@
         {
             get { return _key; }
 
-#if NETSTANDARD_DOES_NOT_SERIALIZE_READ_ONLY_TYPES_BUG
+#if NETSTANDARD
             internal set
             {
                 throw new NotSupportedException(

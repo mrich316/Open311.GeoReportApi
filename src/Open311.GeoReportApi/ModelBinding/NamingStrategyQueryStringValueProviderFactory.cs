@@ -3,7 +3,6 @@
     using System;
     using System.Threading.Tasks;
     using System.Globalization;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Newtonsoft.Json.Serialization;
 
@@ -13,8 +12,7 @@
 
         public NamingStrategyQueryStringValueProviderFactory(NamingStrategy namingStrategy)
         {
-            if (namingStrategy == null) throw new ArgumentNullException(nameof(namingStrategy));
-            _namingStrategy = namingStrategy;
+            _namingStrategy = namingStrategy ?? throw new ArgumentNullException(nameof(namingStrategy));
         }
 
         public Task CreateValueProviderAsync(ValueProviderFactoryContext context)
@@ -29,7 +27,7 @@
 
             context.ValueProviders.Add(valueProvider);
 
-            return TaskCache.CompletedTask;
+            return Task.CompletedTask;
         }
     }
 }

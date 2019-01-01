@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <AssemblyTitle>Host</AssemblyTitle>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <VersionPrefix>0.0.1</VersionPrefix>
+    <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <AssemblyName>Host</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>Host</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Open311.GeoReportApi\Open311.GeoReportApi.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,4 +1,6 @@
-﻿namespace Open311.GeoReportApi.Tests.Filters
+﻿using AutoFixture.Xunit2;
+
+namespace Open311.GeoReportApi.Tests.Filters
 {
     using System;
     using System.Threading.Tasks;
@@ -8,13 +10,12 @@
     using Microsoft.AspNetCore.Mvc.Filters;
     using Models;
     using Moq;
-    using Ploeh.AutoFixture.Xunit2;
     using Services;
     using Xunit;
 
     public class ValidateJurisdictionAttributeTests
     {
-        [Fact, TestConventions]
+        [Fact]
         public void CtorThrowsOnNullJurisdiction()
         {
             Assert.Throws<ArgumentNullException>("jurisdiction", () => new ValidateJurisdictionAttribute(null));
@@ -24,7 +25,6 @@
         {
             [Theory, TestConventions]
             public async Task ReturnsOnResultSet(
-                [Frozen] IJurisdictionService jurisdiction,
                 ValidateJurisdictionAttribute sut,
                 ActionExecutingContext context,
                 ActionExecutionDelegate next)

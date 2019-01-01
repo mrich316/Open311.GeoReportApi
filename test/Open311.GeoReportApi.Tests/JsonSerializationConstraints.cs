@@ -17,7 +17,7 @@
 }}";
             var actual = JsonConvert.SerializeObject(sut, serializerSettings);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -31,7 +31,7 @@
 ]";
             var actual = JsonConvert.SerializeObject(new Errors(sut), serializerSettings);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -48,7 +48,7 @@
 }}";
             var actual = JsonConvert.SerializeObject(sut, serializerSettings);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -67,12 +67,12 @@
 ]";
             var actual = JsonConvert.SerializeObject(new Services(sut), serializerSettings);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
         public void ServiceAttributeValue(JsonSerializerSettings serializerSettings,
-            ServiceAttributeValue sut, SnakeCaseNamingStrategy snakeCase)
+            ServiceAttributeValue sut)
         {
             var expected = $@"{{
   ""key"": ""{sut.Key}"",
@@ -80,7 +80,7 @@
 }}";
             var actual = JsonConvert.SerializeObject(sut, serializerSettings);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -108,7 +108,7 @@
 }}";
             var actual = JsonConvert.SerializeObject(sut, serializerSettings);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -145,12 +145,11 @@
 }}";
             var actual = JsonConvert.SerializeObject(sut, serializerSettings);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
-        public void ServiceRequestCreated(JsonSerializerSettings serializerSettings, ServiceRequestCreated sut,
-            SnakeCaseNamingStrategy snakeCase)
+        public void ServiceRequestCreated(JsonSerializerSettings serializerSettings, ServiceRequestCreated sut)
         {
             var expected = $@"{{
   ""service_request_id"": ""{sut.ServiceRequestId}"",
@@ -160,12 +159,11 @@
 }}";
             var actual = JsonConvert.SerializeObject(sut, serializerSettings);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
-        public void ServiceRequestsOfServiceRequestCreated(JsonSerializerSettings serializerSettings, ServiceRequestCreated sut,
-            SnakeCaseNamingStrategy snakeCase)
+        public void ServiceRequestsOfServiceRequestCreated(JsonSerializerSettings serializerSettings, ServiceRequestCreated sut)
         {
             var expected = $@"[
   {{
@@ -177,12 +175,11 @@
 ]";
             var actual = JsonConvert.SerializeObject(new ServiceRequests<ServiceRequestCreated>(sut), serializerSettings);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
-        public void ServiceRequestToken(JsonSerializerSettings serializerSettings, ServiceRequestToken sut,
-            SnakeCaseNamingStrategy snakeCase)
+        public void ServiceRequestToken(JsonSerializerSettings serializerSettings, ServiceRequestToken sut)
         {
             var expected = $@"{{
   ""service_request_id"": ""{sut.ServiceRequestId}"",
@@ -190,12 +187,11 @@
 }}";
             var actual = JsonConvert.SerializeObject(sut, serializerSettings);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
-        public void ServiceRequestsOfServiceRequestToken(JsonSerializerSettings serializerSettings, ServiceRequestToken sut,
-            SnakeCaseNamingStrategy snakeCase)
+        public void ServiceRequestsOfServiceRequestToken(JsonSerializerSettings serializerSettings, ServiceRequestToken sut)
         {
             var expected = $@"[
   {{
@@ -205,7 +201,7 @@
 ]";
             var actual = JsonConvert.SerializeObject(new ServiceRequests<ServiceRequestToken>(sut), serializerSettings);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -239,7 +235,7 @@
 }}";
             var actual = JsonConvert.SerializeObject(sut, serializerSettings);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]
@@ -275,7 +271,7 @@
 ]";
             var actual = JsonConvert.SerializeObject(new ServiceRequests<ServiceRequest>(sut), serializerSettings);
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual, ignoreLineEndingDifferences: true);
         }
 
         [Theory, TestConventions]

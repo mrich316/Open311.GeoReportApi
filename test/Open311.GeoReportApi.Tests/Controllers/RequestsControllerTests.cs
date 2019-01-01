@@ -1,4 +1,6 @@
-﻿namespace Open311.GeoReportApi.Tests.Controllers
+﻿using AutoFixture.Xunit2;
+
+namespace Open311.GeoReportApi.Tests.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +13,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using Moq;
-    using Ploeh.AutoFixture.Xunit2;
     using Services;
     using Xunit;
 
@@ -100,7 +101,7 @@
 
                 var actual = ((OkObjectResult)result).Value;
                 Assert.IsType<ServiceRequests<ServiceRequest>>(actual);
-                Assert.Equal(0, ((ServiceRequests<ServiceRequest>)actual).Count);
+                Assert.Empty((ServiceRequests<ServiceRequest>)actual);
             }
 
             [Theory, TestConventions]

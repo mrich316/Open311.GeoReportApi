@@ -6,7 +6,6 @@
     using System.Reflection;
     using System.Runtime.ExceptionServices;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public class CommaDelimitedListModelBinder : IModelBinder
@@ -16,7 +15,7 @@
             var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
             if (valueProviderResult == ValueProviderResult.None)
             {
-                return TaskCache.CompletedTask;
+                return Task.CompletedTask;
             }
 
             var modelTypeInfo = bindingContext.ModelType.GetTypeInfo();
@@ -59,7 +58,7 @@
                     bindingContext.ModelMetadata);
             }
 
-            return TaskCache.CompletedTask;
+            return Task.CompletedTask;
         }
     }
 }

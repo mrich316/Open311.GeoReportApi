@@ -1,4 +1,6 @@
-﻿namespace Open311.GeoReportApi.Tests
+﻿using AutoFixture;
+
+namespace Open311.GeoReportApi.Tests
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -10,7 +12,6 @@
     using Moq;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using Ploeh.AutoFixture;
     using Services;
 
     public class TestCustomizations : ICustomization
