@@ -1,4 +1,7 @@
-﻿namespace Open311.GeoReportApi
+﻿using System.Xml;
+using Open311.GeoReportApi.Formatters;
+
+namespace Open311.GeoReportApi
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
@@ -25,11 +28,7 @@
 
         internal static XmlDataContractSerializerOutputFormatter CreateXmlSerializerOutputFormatter()
         {
-            return new XmlDataContractSerializerOutputFormatter(
-                new System.Xml.XmlWriterSettings { Indent = true })
-            {
-                SerializerSettings = { SerializeReadOnlyTypes = true }
-            };
+            return new Open311XmlOutputFormatter();
         }
     }
 }

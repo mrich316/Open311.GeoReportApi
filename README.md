@@ -7,7 +7,7 @@ framework to ease implementation of the `GeoReport v2` api from [Open311](http:/
 
 ## For early adopters only.
 
-As of today, this project is an aspnet web api targetting `netcoreapp1.1` and `net451`,
+As of today, this project is an aspnet web api targeting `netstandard2.0`,
 making it available to all major platforms (windows, linux, macos).
 To use as-is, you can implement interfaces in the namespace `Open311Open311.GeoReportApi.Services`
 and replace the in-memory implementations in `Startup.cs`.
@@ -36,7 +36,7 @@ compliants as of today, we are still in development.
 | `GET Service Request`    | implemented           | xml/json   |
 
 Since the storage of service requests is highly implementation specific, only interfaces are provided.
-The implementation is *YOUR* responsability. It can really be any sources: web services, elastic storage,
+The implementation is *YOUR* responsibility. It can really be any sources: web services, elastic storage,
 databases, erp, etc.  To evaluate the framework, in-memory stores are provided, so you can test the
 solution without any development efforts.
 

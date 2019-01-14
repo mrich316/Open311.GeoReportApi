@@ -269,11 +269,6 @@
         {
             var serializer = Open311Options.CreateXmlSerializerOutputFormatter();
 
-            // override Startup to simplify testing.
-            serializer.WriterSettings.Indent = true;
-            serializer.WriterSettings.IndentChars = "  ";
-            serializer.WriterSettings.OmitXmlDeclaration = true;
-
             var xml = new StringBuilder();
 
             var context = new OutputFormatterWriteContext(
