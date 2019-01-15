@@ -1,4 +1,6 @@
-﻿namespace Open311.GeoReportApi.Tests
+﻿using Open311.GeoReportApi.Formatters;
+
+namespace Open311.GeoReportApi.Tests
 {
     using System;
     using System.IO;
@@ -15,7 +17,7 @@
         [Theory, TestConventions]
         public async Task Error(Error sut)
         {
-            var expected = $@"<error xmlns:i=""http://www.w3.org/2001/XMLSchema-instance"">
+            var expected = $@"<error>
   <code>{sut.Code}</code>
   <description>{sut.Description}</description>
 </error>";
@@ -28,7 +30,7 @@
         [Theory, TestConventions]
         public async Task Service(Service sut)
         {
-            var expected = $@"<service xmlns:i=""http://www.w3.org/2001/XMLSchema-instance"">
+            var expected = $@"<service>
   <description>{sut.Description}</description>
   <group>{sut.Group}</group>
   <keywords>{string.Join(",", sut.Keywords)}</keywords>
@@ -46,7 +48,7 @@
         [Theory, TestConventions]
         public async Task Services(Service sut)
         {
-            var expected = $@"<services xmlns:i=""http://www.w3.org/2001/XMLSchema-instance"">
+            var expected = $@"<services>
   <service>
     <description>{sut.Description}</description>
     <group>{sut.Group}</group>
@@ -66,7 +68,7 @@
         [Theory, TestConventions]
         public async Task ServiceAttributeValue(ServiceAttributeValue sut)
         {
-            var expected = $@"<value xmlns:i=""http://www.w3.org/2001/XMLSchema-instance"">
+            var expected = $@"<value>
   <key>{sut.Key}</key>
   <name>{sut.Name}</name>
 </value>";
@@ -83,7 +85,7 @@
             sut.Values.Clear();
             sut.Values.Add(attributeValue);
 
-            var expected = $@"<attribute xmlns:i=""http://www.w3.org/2001/XMLSchema-instance"">
+            var expected = $@"<attribute>
   <code>{sut.Code}</code>
   <datatype>{sut.Datatype.ToString().ToLowerInvariant()}</datatype>
   <datatype_description>{sut.DatatypeDescription}</datatype_description>
@@ -115,7 +117,7 @@
             attribute.Values.Clear();
             attribute.Values.Add(attributeValue);
 
-            var expected = $@"<service_definition xmlns:i=""http://www.w3.org/2001/XMLSchema-instance"">
+            var expected = $@"<service_definition>
   <attributes>
     <attribute>
       <code>{attribute.Code}</code>
@@ -144,7 +146,7 @@
         [Theory, TestConventions]
         public async Task ServiceRequestCreated(ServiceRequestCreated sut)
         {
-            var expected = $@"<request xmlns:i=""http://www.w3.org/2001/XMLSchema-instance"">
+            var expected = $@"<request>
   <account_id>{sut.AccountId}</account_id>
   <service_notice>{sut.ServiceNotice}</service_notice>
   <service_request_id>{sut.ServiceRequestId}</service_request_id>
@@ -159,7 +161,7 @@
         [Theory, TestConventions]
         public async Task ServiceRequestsOfServiceRequestCreated(ServiceRequestCreated sut)
         {
-            var expected = $@"<service_requests xmlns:i=""http://www.w3.org/2001/XMLSchema-instance"">
+            var expected = $@"<service_requests>
   <request>
     <account_id>{sut.AccountId}</account_id>
     <service_notice>{sut.ServiceNotice}</service_notice>
@@ -176,7 +178,7 @@
         [Theory, TestConventions]
         public async Task ServiceRequestToken(ServiceRequestToken sut)
         {
-            var expected = $@"<request xmlns:i=""http://www.w3.org/2001/XMLSchema-instance"">
+            var expected = $@"<request>
   <service_request_id>{sut.ServiceRequestId}</service_request_id>
   <token>{sut.Token}</token>
 </request>";
@@ -189,7 +191,7 @@
         [Theory, TestConventions]
         public async Task ServiceRequestsOfServiceRequestToken(ServiceRequestToken sut)
         {
-            var expected = $@"<service_requests xmlns:i=""http://www.w3.org/2001/XMLSchema-instance"">
+            var expected = $@"<service_requests>
   <request>
     <service_request_id>{sut.ServiceRequestId}</service_request_id>
     <token>{sut.Token}</token>
@@ -207,7 +209,7 @@
             // Autofixture creates a uri with scheme+host only and JSON.NET strips the last slash on this condition.
             sut.MediaUrl = new Uri(sut.MediaUrl, "/blah/");
 
-            var expected = $@"<request xmlns:i=""http://www.w3.org/2001/XMLSchema-instance"">
+            var expected = $@"<request>
   <address>{sut.Address}</address>
   <address_id>{sut.AddressId}</address_id>
   <agency_responsible>{sut.AgencyResponsible}</agency_responsible>
@@ -238,7 +240,7 @@
             // Autofixture creates a uri with scheme+host only and JSON.NET strips the last slash on this condition.
             sut.MediaUrl = new Uri(sut.MediaUrl, "/blah/");
 
-            var expected = $@"<service_requests xmlns:i=""http://www.w3.org/2001/XMLSchema-instance"">
+            var expected = $@"<service_requests>
   <request>
     <address>{sut.Address}</address>
     <address_id>{sut.AddressId}</address_id>
@@ -267,7 +269,7 @@
 
         private async Task<string> Serialize<T>(T value)
         {
-            var serializer = Open311Options.CreateXmlSerializerOutputFormatter();
+            var serializer = new Open311XmlOutputFormatter();
 
             var xml = new StringBuilder();
 

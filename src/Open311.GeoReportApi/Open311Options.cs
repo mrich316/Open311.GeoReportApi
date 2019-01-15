@@ -25,10 +25,5 @@ namespace Open311.GeoReportApi
             options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             options.SerializerSettings.Converters.Add(new StringEnumConverter(true));
         }
-
-        internal static XmlDataContractSerializerOutputFormatter CreateXmlSerializerOutputFormatter()
-        {
-            return new Open311XmlOutputFormatter();
-        }
     }
 }

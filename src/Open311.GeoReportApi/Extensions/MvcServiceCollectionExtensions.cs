@@ -1,4 +1,7 @@
 ﻿// ReSharper disable once CheckNamespace
+
+using Open311.GeoReportApi.Formatters;
+
 namespace Microsoft.Extensions.DependencyInjection
 {
     using System;
@@ -24,7 +27,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddMvcOptions(options =>
                 {
                     // Add xml output formatter and mapping.
-                    options.OutputFormatters.Add(Open311Options.CreateXmlSerializerOutputFormatter());
+                    options.OutputFormatters.Add(new Open311XmlOutputFormatter());
 
                     options.FormatterMappings.SetMediaTypeMappingForFormat("xml",
                         new MediaTypeHeaderValue("application/xml"));

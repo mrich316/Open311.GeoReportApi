@@ -46,10 +46,6 @@ API Keys required to normally submit a new service request are not currently use
 Also, we are missing a lot of unit tests in model logics and value providers.
 Work is being planned to address these issues.
 
-The current xml signature includes the default namespace (`xmlns:i="http://www.w3.org/2001/XMLSchema-instance"`).
-Also, the xml serializer used ([DataContractSerializer](https://msdn.microsoft.com/en-us/library/system.runtime.serialization.datacontractserializer(v=vs.110).aspx))
-always sort properties alphabetically. This may cause problems for custom xml deserialization routines.
-
 The published signatures by our implementation are not validated for official compliance (yet).
 Once the code stabilize, we will make sure it is on par with the standard.
 

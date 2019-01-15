@@ -3,17 +3,24 @@
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
     using Open311.GeoReportApi;
     using Open311.GeoReportApi.Models;
 
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             // Set a default jurisdiction.
-            Open311Options.DefaultJurisdictionId = "laval.ca";
+            Open311Options.DefaultJurisdictionId = "city.sdk";
 
             // Add open 311 preconfigured mvc.
             // It preconfigures output formatters and filters to make it compliant.
@@ -53,10 +60,8 @@
             //services.AddScoped<IServiceRequestSearchService, YourImplementationServiceRequestSearchService>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            loggerFactory.AddConsole();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
