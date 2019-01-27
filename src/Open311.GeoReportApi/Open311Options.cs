@@ -1,17 +1,13 @@
-﻿using System.Xml;
-using Open311.GeoReportApi.Formatters;
-
-namespace Open311.GeoReportApi
+﻿namespace Open311.GeoReportApi
 {
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Formatters;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
 
     public static class Open311Options
     {
-        public static string DefaultJurisdictionId = "laval.ca";
+        public static string DefaultJurisdictionId = "city.sdk";
 
         internal static void SetupJsonOptions(MvcJsonOptions options)
         {

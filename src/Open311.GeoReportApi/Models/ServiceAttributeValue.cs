@@ -9,10 +9,10 @@
     {
         private readonly string _key;
 
-        public ServiceAttributeValue(string key, string value = null)
+        public ServiceAttributeValue(string key, string name = null)
         {
             _key = key ?? throw new ArgumentNullException(nameof(key));
-            Name = value;
+            Name = name;
         }
 
         [DataMember(Name = Open311Constants.ModelProperties.Key)]
